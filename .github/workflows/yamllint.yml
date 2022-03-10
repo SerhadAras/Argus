@@ -1,7 +1,6 @@
 ---
 name: Yaml Code Style
-on:
-  pull_request:
+on: push
 
 jobs:
   style:

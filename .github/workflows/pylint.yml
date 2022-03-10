@@ -1,6 +1,7 @@
+---
 name: Python Code Style
-on:
-  pull_request:
+on: push
+
 jobs:
   style:
     runs-on: ubuntu-latest
