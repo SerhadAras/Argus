@@ -331,6 +331,8 @@ on_blacklist = []
 
 
 class ThreadRBL(threading.Thread):
+    """A Blocklist check thread
+    """
     def __init__(self, queue):
         threading.Thread.__init__(self)
         self.queue = queue
@@ -355,9 +357,17 @@ class ThreadRBL(threading.Thread):
 
 
 def usage(argv0):
+    """Print usage
+    """
     print("%s -w <WARN level> -c <CRIT level> -h <hostname or IP>" % argv0)
 
 def main(argv, environ):
+    """Main function
+
+    Args:
+        argv (list): List of arguments from the command line.
+        environ (os.environ): The current environment variables.
+    """
     options, remainder = getopt.getopt(argv[1:],
                                        "w:c:h:a:d",
                                        ["warn=", "crit=", "host=", "address=","debug"])
@@ -400,7 +410,7 @@ def main(argv, environ):
         ip = ipaddress.ip_address(addr)
     else:
         ip = ipaddress.ip_address(unicode(addr))
-    if (ip.version == 6):
+    if ip.version == 6:
         addr_exploded = ip.exploded
         check_name = '.'.join([c for c in addr_exploded if c != ':'])[::-1]
     else:
@@ -431,12 +441,12 @@ def main(argv, environ):
     if on_blacklist:
         output = '%s on %s blacklist(s): %s' % (
             host, len(on_blacklist), ', '.join(on_blacklist))
-            
+
         # Status is CRITICAL
         if len(on_blacklist) >= crit_limit:
             print('{"name": "Blacklist", "score": 0, "message": "CRITICAL: %s"}' % output)
             sys.exit(status['CRITICAL'])
-        
+
         # Status is WARNING
         if len(on_blacklist) >= warn_limit:
             print('{"name": "Blacklist", "score": 0, "message": "WARNING: %s"}' % output)

@@ -13,7 +13,12 @@ ExitWarning = 1
 ExitCritical = 2
 ExitUnknown = 3
 
-def testdnssec(opts):
+def testDnssec(opts):
+    """Test if DNSSEC is enabled for a specific domain.
+
+    Args:
+        opts (Values): Input options.
+    """
     domain = opts.domain
     domain = domain.replace("https://", "")
     domain = domain.replace("http://", "")
@@ -63,6 +68,8 @@ def testdnssec(opts):
         sys.exit(ExitUnknown)
 
 def main():
+    """Main function
+    """
     parser = OptionParser()
     parser.add_option("-H","--domain", type=str,
                       dest="domain", help="Domain name for check DNSSEC, for example: -H www.ciencias.ulisboa.pt")
@@ -73,7 +80,7 @@ def main():
     if not opts.domain:
         parser.error('{"name": "DNSSEC", "message": "Please, this program requires domain arguments, for example: -H www.ciencias.ulisboa.pt."}')
 
-    testdnssec(opts)
+    testDnssec(opts)
 
 if __name__ == '__main__':
     main()

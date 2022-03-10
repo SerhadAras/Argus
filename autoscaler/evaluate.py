@@ -3,11 +3,18 @@ import sys
 import math
 
 def main():
+    """The main function
+    """
     # Parse provided spec into a dict
     spec = json.loads(sys.stdin.read())
     evaluate(spec)
 
 def evaluate(spec):
+    """Determine the amount of replicas for a given resource and metric.
+
+    Args:
+        spec (dict): The resource and metric object.
+    """
     try:
         value = int(spec["metrics"][0]["value"])
         throughput = int(spec["resource"]["metadata"]["labels"]["throughput"])
