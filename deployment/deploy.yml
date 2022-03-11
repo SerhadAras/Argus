@@ -30,6 +30,12 @@
     - k8s
     - redis
 
+- import_playbook: "./services/gateway.yml"
+  tags:
+    - kubernetes
+    - k8s
+    - gateway
+
 - import_playbook: "./services/sequencer.yml"
   tags:
     - kubernetes

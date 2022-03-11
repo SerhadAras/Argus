@@ -1,0 +1,44 @@
+from node:16-alpine
+
+# Run as node user
+USER node
+RUN mkdir $HOME/gateway && \
+    mkdir $HOME/gateway/logger && \
+    mkdir $HOME/gateway/redis && \
+    mkdir $HOME/gateway/app
+
+#################
+# Build modules #
+#################
+
+# Logger
+WORKDIR /home/node/gateway/logger
+COPY --chown=node:node ./logger/package* ./
+COPY --chown=node:node ./logger/lib/ ./lib
+RUN npm ci --production
+
+# Redis
+WORKDIR /home/node/gateway/redis
+COPY --chown=node:node ./redis/package* ./
+COPY --chown=node:node ./redis/lib/ ./lib
+RUN npm ci --production
+
+#############
+# Build app #
+#############
+
+WORKDIR /home/node/gateway/app
+
+# Install modules
+COPY --chown=node:node ./gateway/package* ./
+RUN npm ci --production
+
+# Copy src files
+COPY --chown=node:node ./gateway/src/ ./
+
+# Set default environment variables
+ENV PORT=3000
+ENV LOGLEVEL=http
+
+# Set entrypoint
+CMD [ "node", "index.js" ]

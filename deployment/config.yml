@@ -35,6 +35,25 @@ redis:
   # Must be at least 3
   replicas: 3
 
+gateway:
+  # The log level of this service
+  #   - error
+  #   - warn
+  #   - info
+  #   - http (http access logs)
+  #   - verbose
+  #   - debug
+  #   - silly
+  loglevel: http
+
+  # Amount of gateway minimum and maximum replicas.
+  replicas:
+    min: 3
+    max: 10
+
+  # The docker tag to pull
+  tag: latest
+
 sequencer:
   # The log level of this service
   #   - error
@@ -48,7 +67,7 @@ sequencer:
 
   # Amount of sequencer minimum and maximum replicas.
   replicas:
-    min: 1
+    min: 3
     max: 10
 
   # The docker tag to pull

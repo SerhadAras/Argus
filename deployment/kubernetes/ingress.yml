@@ -24,6 +24,6 @@
                       pathType: Prefix
                       backend:
                         service:
-                          name: sequencer-server
+                          name: gateway-server
                           port:
                             number: 3000

@@ -20,9 +20,38 @@
         namespace: "{{ cluster.namespace }}"
         name: sequencer-server
 
-    - name: Remove AutoScaler
+    - name: Remove Sequencer AutoScaler
+      tags:
+        - sequencer
       kubernetes.core.k8s:
         state: absent
         namespace: "{{ cluster.namespace }}"
         kind: HorizontalPodAutoscaler
         name: sequencer-autoscaler
+
+    - name: "Remove Gateway Deployment"
+      tags:
+        - gateway
+      kubernetes.core.k8s:
+        state: absent
+        kind: Deployment
+        namespace: "{{ cluster.namespace }}"
+        name: gateway
+
+    - name: "Remove Gateway Service"
+      tags:
+        - gateway
+      kubernetes.core.k8s:
+        state: absent
+        kind: Service
+        namespace: "{{ cluster.namespace }}"
+        name: gateway-server
+
+    - name: Remove Gateway AutoScaler
+      tags:
+        - gateway
+      kubernetes.core.k8s:
+        state: absent
+        namespace: "{{ cluster.namespace }}"
+        kind: HorizontalPodAutoscaler
+        name: gateway-autoscaler

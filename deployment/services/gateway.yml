@@ -1,0 +1,85 @@
+---
+- name: Deploy Gateway
+  hosts: localhost
+  tasks:
+    - name: "Deploy Gateway"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ cluster.namespace }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: "gateway"
+            labels:
+              app: "gateway"
+          spec:
+            replicas: "{{ gateway.replicas.min }}"
+            selector:
+              matchLabels:
+                app: "gateway"
+            template:
+              metadata:
+                labels:
+                  app: "gateway"
+              spec:
+                imagePullSecrets: "{{ docker.imagePullSecrets }}"
+                containers:
+                  - name: "gateway"
+                    image: "{{ docker.registry }}/gateway:{{ gateway.tag }}"
+                    imagePullPolicy: "{{ docker.pullPolicy }}"
+                    ports:
+                      - containerPort: 3000
+                    resources:
+                      requests:
+                        memory: "15Mi"
+                        cpu: "100m"
+                      limits:
+                        memory: "50Mi"
+                        cpu: "300m"
+                    env:
+                      - name: PORT
+                        value: "3000"
+                      - name: REDIS_HOST
+                        value: "{{ app.name }}-redis-sentinel.{{ cluster.namespace }}"
+                      - name: REDIS_PORT
+                        value: "26379"
+                      - name: LOGLEVEL
+                        value: "{{ gateway.loglevel }}"
+
+    - name: Deploy Gateway Service
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ cluster.namespace }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: gateway-server
+          spec:
+            selector:
+              app: gateway
+            ports:
+              - name: http
+                protocol: TCP
+                port: 3000
+                targetPort: 3000
+
+    - name: Deploy Gateway AutoScaler
+      when: "autoscaler.enabled == true"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ cluster.namespace }}"
+        definition:
+          apiVersion: autoscaling/v1
+          kind: HorizontalPodAutoscaler
+          metadata:
+            name: gateway-autoscaler
+          spec:
+            scaleTargetRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: gateway
+            minReplicas: "{{ gateway.replicas.min }}"
+            maxReplicas: "{{ gateway.replicas.max }}"
+            targetCPUUtilizationPercentage: 90
