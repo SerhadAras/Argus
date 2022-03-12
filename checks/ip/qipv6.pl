@@ -27,7 +27,7 @@ while(<IN>){
 		$detail=$_;	
 	}
 }
-$name = '"name": "DNSSEC2",';
+$name = '"name": "IPV6",';
 $message = '"message":';	
 $punten = '"score":';
 

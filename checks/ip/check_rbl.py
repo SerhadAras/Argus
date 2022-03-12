@@ -355,12 +355,6 @@ class ThreadRBL(threading.Thread):
             # Signal queue that job is done
             self.queue.task_done()
 
-
-def usage(argv0):
-    """Print usage
-    """
-    print("%s -w <WARN level> -c <CRIT level> -h <hostname or IP>" % argv0)
-
 def main(argv, environ):
     """Main function
 
@@ -368,43 +362,14 @@ def main(argv, environ):
         argv (list): List of arguments from the command line.
         environ (os.environ): The current environment variables.
     """
-    options, remainder = getopt.getopt(argv[1:],
-                                       "w:c:h:a:d",
-                                       ["warn=", "crit=", "host=", "address=","debug"])
-    status = {'OK': 0, 'WARNING': 1, 'CRITICAL': 2, 'UNKNOWN': 3}
-    host = None
-    addr = None
-
-    if len(options) > 4 or len(options) < 3:
-        usage(argv[0])
-        sys.exit(status['UNKNOWN'])
-
-    for field, val in options:
-        if field in ('-w', '--warn'):
-            warn_limit = int(val)
-        elif field in ('-c', '--crit'):
-            crit_limit = int(val)
-        elif field in ('-h', '--host'):
-            host = val
-        elif field in ('-a', '--address'):
-            addr = val
-        elif field in ('-d', '--debug'):
-            global debug
-            debug = True
-        else:
-            usage(argv[0])
-            sys.exit(status['UNKNOWN'])
-
-    if host and addr:
-        print('{"name": "Blacklist", "message": "ERROR: Cannot use both host and address. Please choose one."}')
-        sys.exit(status['UNKNOWN'])
+    host = argv[1]
 
     if host:
         try:
             addr = socket.gethostbyname(host)
         except:
             print('{"name": "Blacklist", "message": "ERROR: Host %s not found - maybe try a FQDN?"}'% host)
-            sys.exit(status['UNKNOWN'])
+            sys.exit()
 
     if sys.version_info[0] >= 3:
         ip = ipaddress.ip_address(addr)
@@ -443,22 +408,16 @@ def main(argv, environ):
             host, len(on_blacklist), ', '.join(on_blacklist))
 
         # Status is CRITICAL
-        if len(on_blacklist) >= crit_limit:
+        if len(on_blacklist) >= 2:
             print('{"name": "Blacklist", "score": 0, "message": "CRITICAL: %s"}' % output)
-            sys.exit(status['CRITICAL'])
 
         # Status is WARNING
-        if len(on_blacklist) >= warn_limit:
-            print('{"name": "Blacklist", "score": 0, "message": "WARNING: %s"}' % output)
-            sys.exit(status['WARNING'])
-        else:
-            # Status is OK and host is blacklisted
-            print('{"name": "Blacklist", "score": 0, "message": "OK: %s"}' % output)
-            sys.exit(status['OK'])
+        elif len(on_blacklist) == 1:
+            print('{"name": "Blacklist", "score": 5, "message": "WARNING: %s"}' % output)
+
     else:
         # Status is OK and host is not blacklisted
         print('{"name": "Blacklist", "score": 10, "message": "OK: %s not on any known blacklists"}'% host)
-        sys.exit(status['OK'])
 
 if __name__ == "__main__":
     main(sys.argv, os.environ)
