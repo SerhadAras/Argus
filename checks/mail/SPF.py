@@ -2,6 +2,7 @@
 import argparse
 import dns.resolver
 import json
+import os
 
 parser = argparse.ArgumentParser(description='Simple SPF quick test.')
 parser.add_argument('domain', help='Domain name to test')
@@ -23,11 +24,15 @@ def spefTest(domain):
                 result = {"name": "SPF check", "score": score, "message": mes}
                 return result
     except:
-        mes="[FAIL] SPF record not found."
+        mes = "[FAIL] SPF record not found."
         score = 0
         result = {"name": "SPF check", "score": score, "message": mes}
         return result
 
-result=spefTest(domain)
-jsonresult=json.dumps(result)
+envvar = os.environ.get("MX")
+if envvar is not None:
+    result = spefTest(domain)
+    jsonresult = json.dumps(result)
+else:
+    jsonresult = {}
 print(jsonresult)

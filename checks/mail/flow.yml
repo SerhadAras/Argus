@@ -1,6 +1,9 @@
 ---
 name: mail
 stages:
+  - name: "MX record"
+    checks:
+      - MX.py
   - name: "Mailcheck stage"
     checks:
       - DKIM.py
