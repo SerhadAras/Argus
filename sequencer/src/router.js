@@ -67,7 +67,6 @@ router.post("/jobs", async (req, res) => {
 router.post("/results", async (req, res) => {
 
     const results = req.body;
-    logger.debug(JSON.stringify(req.body));
 
     await redisClient.insert("results", results);
 
