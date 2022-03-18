@@ -1,5 +1,13 @@
 ---
 name: ip
+tags:
+  - ip
+  - passive
+  - geoip
+type:
+  - domain
+  - ip
+  - ipv6
 stages:
   - name: IP Checks
     checks:

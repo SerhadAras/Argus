@@ -33,7 +33,7 @@ for version in VERSIONS:
         if version == ssl.PROTOCOL_TLSv1 or version == ssl.PROTOCOL_TLSv1_1:
             badSSL = True
     except requests.exceptions.SSLError:
-        print(f'{{"name": "minimum-protocol", "score": -1, "message": "Er is iets mis met uw certificaat. Kan geen ssl-versie vinden" }}')
+        print(f'{{"name": "minimum-protocol", "score": 0, "certain": false, "message": "Er is iets mis met uw certificaat. Kan geen ssl-versie vinden" }}')
         quit()
     except:
         print({})

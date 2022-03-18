@@ -39,8 +39,8 @@ def dkimTest():
                 return result
     except:
         mes = "[FAIL] DKIM record not found."
-        score = -1
-        result = {"name": "DKIM check", "score": score, "message": mes}
+        score = 0
+        result = {"name": "DKIM check", "score": score, "message": mes, "certain": False}
         return result
 
 envvar = os.environ.get("MX")

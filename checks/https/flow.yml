@@ -1,5 +1,15 @@
 ---
 name: https
+tags:
+  - https
+  - passive
+  - web
+  - tls
+  - ssl
+type:
+  - domain
+  - ip
+  - ipv6
 stages:
   - name: HTTPS Checks
     checks:
