@@ -23,6 +23,12 @@ COPY --chown=node:node ./redis/package* ./
 COPY --chown=node:node ./redis/lib/ ./lib
 RUN npm ci --production
 
+# Service
+WORKDIR /home/node/sequencer/service
+COPY --chown=node:node ./service/package* ./
+COPY --chown=node:node ./service/lib/ ./lib
+RUN npm ci --production
+
 #############
 # Build app #
 #############
