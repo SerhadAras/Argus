@@ -47,7 +47,7 @@ router.get("/poll", async (req, res) => {
 });
 
 router.get("/checklists", async (req, res) => {
-    const results = await redis.SortedGet("checklists");
+    const results = await redis.sortedGet("checklists");
     var checks = [];
 
     results.forEach(x => {
@@ -63,7 +63,7 @@ router.get("/checklists", async (req, res) => {
 
     });
 
-    res.status(200).contentType("application/json").send(checks.map(x => JSON.parse(x)));
+    res.status(200).contentType("application/json").send(checks);
 });
 
 service.start();

@@ -9,6 +9,7 @@ router.get("/job/:id", async (req, res) => {
     const queueId = req.params.id;
     logger.debug(`Finding jobs in ${queueId} queue.`);
 
+    await redis.sortedSet("checklists", queueId);
     const job = await redis.pop("jobs:" + queueId);
 
     if(!job || job === "")
@@ -16,8 +17,6 @@ router.get("/job/:id", async (req, res) => {
         res.status(404).send({status: 404, message: "No jobs are ready for execution"});
         return;
     }
-
-    await redis.sortedSet("checklists", queueId);
 
     res.status(200).contentType("application/json").send(job);
 });
