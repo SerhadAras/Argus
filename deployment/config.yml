@@ -25,15 +25,15 @@ docker:
   pullPolicy: IfNotPresent
 
 redis:
-  # Run all instances on speperate hosts
-  hostSeperated: true
-
   # Docker tag of the redis pods
   tag: 6-alpine
 
   # Amount of redis database replicas
   # Must be at least 3
   replicas: 3
+
+  # Persistent storage
+  persistence: false
 
 gateway:
   # The log level of this service
@@ -202,7 +202,7 @@ autoscaler:
 
 build:
   # Build all images before deploying
-  enabled: true
+  enabled: false
 
   # The tags for building
   #  <registry>/<image name>:<tag>

@@ -4,40 +4,30 @@
   tasks:
     - name: Add required helm repo
       kubernetes.core.helm_repository:
-        name: dandydev
-        repo_url: https://dandydeveloper.github.io/charts
+        name: bitnami
+        repo_url: https://charts.bitnami.com/bitnami
 
     - name: Install Redis cluster
       kubernetes.core.helm:
-        name: "{{ app.name }}"
-        chart_ref: dandydev/redis-ha
-        release_namespace: "{{ cluster.namespace }}"
-        release_values:
-          hardAntiAffinity: "{{ redis.hostSeperated }}"
-          image:
-            tag: "{{ redis.tag }}"
-
-          replicas: "{{ redis.replicas }}"
-
-          securityContext:
-            runAsUser: 1000
-            fsGroup: 1000
-            runAsNonRoot: true
-
-    - name: Create Redis Sentinel Service
-      kubernetes.core.k8s:
-        state: present
+        name: redis
+        chart_ref: bitnami/redis
         namespace: "{{ cluster.namespace }}"
-        definition:
-          apiVersion: v1
-          kind: Service
-          metadata:
-            name: "{{ app.name }}-redis-sentinel"
-          spec:
-            selector:
-              app: redis-ha
-              release: "{{ app.name }}"
-            ports:
-              - protocol: TCP
-                port: 26379
-                targetPort: 26379
+        values:
+          commonLabels:
+            app: redis
+
+          master:
+            persistence:
+              enabled: "{{ redis.persistence }}"
+
+          replica:
+            replicaCount: "{{ redis.replicas }}"
+            persistence:
+              enabled: "{{ redis.persistence }}"
+
+          sentinel:
+            enabled: true
+
+          auth:
+            enabled: true
+            sentinel: true

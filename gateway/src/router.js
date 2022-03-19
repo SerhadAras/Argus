@@ -9,7 +9,8 @@ const logFile = LogFile.createLogFile("gateway");
 const logger = logFile.getLogger();
 
 // Create redis client
-const redisClient = new RedisClient(process.env.REDIS_HOST || "localhost", process.env.REDIS_PORT || 26379);
+const redisClient = new RedisClient(process.env.REDIS_HOST || "localhost",
+    process.env.REDIS_PORT || 26379, process.env.REDIS_PASSWORD || "");
 
 // Register redis events
 redisClient.onError((err) => {
