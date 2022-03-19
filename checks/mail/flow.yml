@@ -1,5 +1,13 @@
 ---
 name: mail
+tags:
+  - mail
+  - passive
+  - DKIM
+  - DMARC
+  - SPF
+type:
+  - domain
 stages:
   - name: "MX record"
     checks:

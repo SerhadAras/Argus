@@ -11,9 +11,9 @@ class Redis
      * @param {string} host
      * @param {number} port
      */
-    constructor(host, port=26379)
+    constructor(host, port=26379, password = "")
     {
-        this.client = new IoRedis({
+        const options = {
             sentinels: [
                 {
                     port: port,
@@ -21,7 +21,15 @@ class Redis
                 }
             ],
             name: "mymaster"
-        });
+        };
+
+        if(password)
+        {
+            options.sentinelPassword = password;
+            options.password = password;
+        }
+
+        this.client = new IoRedis(options);
         this.redLock = new RedLock([this.client]);
     }
 

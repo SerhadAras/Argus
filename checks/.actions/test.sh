@@ -1,15 +1,13 @@
 #!/bin/bash
 
-DIRS="$(find . -type d | tail -n +2 | sed -e "s/\.\///g")"
+DIRS="$(find . -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
 FAILED=0
 
 for DIR in $DIRS
 do
     echo "#############################################"
-    echo "Building flow $DIR"
-    docker build -f Dockerfile --build-arg checklist=$DIR --build-arg registry=test -t $DIR . > /dev/null
     echo "Running flow $DIR"
-    docker run --rm $DIR python /app/oneshot.py $@
+    docker run --rm ghcr.io/watcherwhale/checklist:$DIR-latest python /app/oneshot.py $@
 
     if [ "$?" != "0" ];
     then

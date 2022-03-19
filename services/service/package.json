@@ -1,8 +1,8 @@
 {
-  "name": "gateway",
+  "name": "service",
   "version": "1.0.0",
-  "description": "Service to communicate with our infrastructure.",
-  "main": "src/index.js",
+  "description": "A template for all node services.",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/WatcherWhale/SecProA.git"
@@ -28,7 +28,6 @@
   "dependencies": {
     "express": "^4.17.3",
     "logfile": "file:../logger",
-    "redis": "file:../redis",
-    "uuid": "^8.3.2"
+    "redis": "file:../redis"
   }
 }

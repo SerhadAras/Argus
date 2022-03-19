@@ -1,5 +1,10 @@
 ---
 name: dns
+tags:
+  - dns
+  - passive
+type:
+  - domain
 stages:
   - name: DNS Checks
     checks:

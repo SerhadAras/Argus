@@ -1,6 +1,6 @@
 {
   "name": "sequencer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A service that dequeues tasks and queues check results",
   "main": "src/index.js",
   "repository": {
@@ -26,8 +26,6 @@
   },
   "homepage": "https://github.com/WatcherWhale/SecProA#readme",
   "dependencies": {
-    "express": "^4.17.3",
-    "logfile": "file:../logger",
-    "redis": "file:../redis"
+    "service": "file:../service"
   }
 }

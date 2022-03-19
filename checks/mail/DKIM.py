@@ -9,7 +9,10 @@ parser.add_argument('domain', help = 'Domain name to test')
 args = parser.parse_args()
 domain = args.domain
 
-listselectors = ["selector1","selector2","google","everlytickey1","everlytickey2","eversrv","k1","mxvault","dkim"]
+listselectors = ["selector1","selector2","google","everlytickey1","everlytickey2","eversrv","k1","mxvault","dkim","default"]
+
+listselectors.append(domain.replace(".", ""))
+listselectors.extend(domain.split(".")[:-1])
 
 for selector in listselectors:
     try:
@@ -36,8 +39,8 @@ def dkimTest():
                 return result
     except:
         mes = "[FAIL] DKIM record not found."
-        score = -1
-        result = {"name": "DKIM check", "score": score, "message": mes}
+        score = 0
+        result = {"name": "DKIM check", "score": score, "message": mes, "certain": False}
         return result
 
 envvar = os.environ.get("MX")
