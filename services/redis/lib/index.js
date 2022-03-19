@@ -105,6 +105,27 @@ class Redis
     }
 
     /**
+     * @param {string} key the queue in which the value will be stored
+     * @param {any} value
+     * @returns {Promise<any>}
+     * performs a sorted set on a certain queue
+     */
+    sortedSet(key, value)
+    {
+        return this.client.zadd(key, Date.now() +  600, value);
+    }
+
+    /**
+     * @param {string} key
+     * @returns {Promise<string[]>}
+     */
+    sortedGet(key)
+    {
+        return this.client.zrange(key,0,-1, "WITHSCORES" );
+    }
+
+
+    /**
      * @param {(...args: any[])=> void} callback
      */
     onErrorRedLock(callback)

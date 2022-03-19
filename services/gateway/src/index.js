@@ -47,7 +47,23 @@ router.get("/poll", async (req, res) => {
 });
 
 router.get("/checklists", async (req, res) => {
-    res.status(501).send();
+    const results = await redis.SortedGet("checklists");
+    var checks = [];
+
+    results.forEach(x => {
+        var index = results.indexOf(x);
+
+        if(index % 2 === 0)
+        {
+            if(results[index + 1] > Date.now())  //only select the checks that are not expired
+            {
+                checks.push(x);
+            }
+        }
+
+    });
+
+    res.status(200).contentType("application/json").send(checks.map(x => JSON.parse(x)));
 });
 
 service.start();

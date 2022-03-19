@@ -17,6 +17,8 @@ router.get("/job/:id", async (req, res) => {
         return;
     }
 
+    await redis.sortedSet("checklists", queueId);
+
     res.status(200).contentType("application/json").send(job);
 });
 
