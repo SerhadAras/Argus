@@ -2,29 +2,29 @@ from node:16-alpine
 
 # Run as node user
 USER node
-RUN mkdir $HOME/sequencer && \
-    mkdir $HOME/sequencer/logger && \
-    mkdir $HOME/sequencer/redis && \
-    mkdir $HOME/sequencer/app
+RUN mkdir $HOME/logger && \
+    mkdir $HOME/redis && \
+    mkdir $HOME/service && \
+    mkdir $HOME/app
 
 #################
 # Build modules #
 #################
 
 # Logger
-WORKDIR /home/node/sequencer/logger
+WORKDIR /home/node/logger
 COPY --chown=node:node ./logger/package* ./
 COPY --chown=node:node ./logger/lib/ ./lib
 RUN npm ci --production
 
 # Redis
-WORKDIR /home/node/sequencer/redis
+WORKDIR /home/node/redis
 COPY --chown=node:node ./redis/package* ./
 COPY --chown=node:node ./redis/lib/ ./lib
 RUN npm ci --production
 
 # Service
-WORKDIR /home/node/sequencer/service
+WORKDIR /home/node/service
 COPY --chown=node:node ./service/package* ./
 COPY --chown=node:node ./service/lib/ ./lib
 RUN npm ci --production
@@ -33,14 +33,16 @@ RUN npm ci --production
 # Build app #
 #############
 
-WORKDIR /home/node/sequencer/app
+ARG service
+
+WORKDIR /home/node/app
 
 # Install modules
-COPY --chown=node:node ./sequencer/package* ./
+COPY --chown=node:node ./$service/package* ./
 RUN npm ci --production
 
 # Copy src files
-COPY --chown=node:node ./sequencer/src/ ./
+COPY --chown=node:node ./$service/src/ ./
 
 # Set default environment variables
 ENV PORT=3000

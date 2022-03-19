@@ -1,0 +1,16 @@
+---
+name: Services
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build service images
+        run: ./.actions/build.sh
+        working-directory: services
