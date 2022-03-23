@@ -34,8 +34,6 @@ def main():
             logger.error("an exception has occured", flow.getName())
             time.sleep(TIMEOUT)
 
-
-
 if __name__ == "__main__":
 
     if os.environ.get("TIMEOUT") is not None:

@@ -15,12 +15,13 @@ def requestJob(name: str) -> dict | None:
     Returns:
         dict: The job request or None when no jobs are available.
     """
+    logger.debug("requesting jobs")
     req = requests.get(URL + f"job/{name}")
 
     if req.status_code == 200:
         return json.loads(req.text)
 
-    logger.info("no jobs found")
+    logger.debug("no jobs found")
     return None
 
 def pushResults(results: dict) -> bool:
