@@ -110,10 +110,10 @@ class LogStream
 }
 
 /**
- * Custom winston format to attach the logFile name to the logging output.
+ * Custom winston format to attach the service name to the logging output.
  */
 const logFileFormat = winston.format((info, opts) => {
-    info.logFile = opts;
+    info.service = opts;
     return info;
 });
 

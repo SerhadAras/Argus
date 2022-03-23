@@ -87,7 +87,7 @@ check-str-concat-over-line-jumps=no
 
 
 [BASIC]
-disable = C0114, W0221, W0212
+disable = C0114, W0221, W0212, R0201
 
 # Naming style matching correct argument names.
 argument-naming-style=camelCase
