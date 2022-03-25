@@ -12,7 +12,7 @@ def main():
     """
     logger = getLogger("checklist")
     logger.info("starting service")
-    flow = Flow()
+    flow = Flow(logger)
     logger.info(f"loaded flow {flow.getName}", flow.getName)
 
     while True:

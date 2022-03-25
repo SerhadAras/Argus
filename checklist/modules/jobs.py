@@ -1,10 +1,8 @@
 import os
 import json
 import requests
-from modules.logger import getLogger
 
 URL = os.environ.get("SEQUENCER_URL") + "/api/v1/"
-logger = getLogger("checklist")
 
 def requestJob(name: str) -> dict | None:
     """Request a job from a sequencer server.
@@ -21,7 +19,6 @@ def requestJob(name: str) -> dict | None:
     if req.status_code == 200:
         return json.loads(req.text)
 
-    logger.debug("no jobs found")
     return None
 
 def pushResults(results: dict) -> bool:

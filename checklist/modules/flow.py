@@ -12,8 +12,8 @@ class Flow:
     """A flow executor class
     """
 
-    def __init__(self):
-        self.logger = getLogger("checklist")
+    def __init__(self, logger):
+        self.logger = logger
         self.logger.info("loading flow")
         self.load()
 

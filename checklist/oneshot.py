@@ -2,12 +2,14 @@
 
 import sys
 from modules.flow import Flow
+from modules.logger import getLogger
 
 def main(domain):
     """
     Main method
     """
-    flow = Flow()
+    logger = getLogger("checklist")
+    flow = Flow(logger)
     results = flow.run(domain)
     print(results)
 
