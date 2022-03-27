@@ -1,0 +1,11 @@
+---
+name: log4J
+tags:
+  - log4J
+  - active
+type:
+  - domain
+stages:
+  - name: "Log4J scan"
+    checks:
+      - log4jscan.py
