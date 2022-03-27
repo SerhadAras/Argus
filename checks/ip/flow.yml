@@ -13,3 +13,4 @@ stages:
     checks:
       - check_rbl.py
       - geoIP.py
+      - ipv6.py
