@@ -201,7 +201,8 @@ def parseUrl(url):
 
     # FilePath: /login.jsp
     file_path = urlparse.urlparse(url).path
-    if (file_path == ''):
+    print(file_path)
+    if file_path == '':
         file_path = '/'
 
     return({"scheme": scheme,
