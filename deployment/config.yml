@@ -1,14 +1,14 @@
 ---
 app:
   # The name of the application
-  name: howsami
+  name: argus
 
   # The hostname for the ingress endpoint.
-  host: howsami.local
+  host: argus.local
 
 cluster:
   # The kubernetes namespace to deploy to
-  namespace: howsami
+  namespace: argus
 
 docker:
   # Registry / account to push the images to

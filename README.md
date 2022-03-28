@@ -1,16 +1,15 @@
-
 <h1 align="center">
-    <img src = "./.images/onetrustLogo.png" align = "center" height = 200px> <br> <br>
-    HowSamI
+    <img src = "./.images/Argus.png" align = "center" height = 200px> <br> <br>
 </h1>
 
-> How Safe am I? Really?
+> Argus: the "all-seeing" primordial giant
 
-HowSamI was a responsibility given to the students of "Security Project", a course at AP Hogeschool.  
-The idea is to create a highly available, agile platform to execute checks that control a given domain.  
-We realised this by using different microservices that can be easily deployed with ansible scripts and dockerfiles.  
+Argus was a responsibility given to the students of "Security Project", a course at AP Hogeschool.  
+The idea is to create a highly available, agile platform to execute checks that control a given domain.
+We realised this by using different microservices that can be easily deployed with ansible scripts and dockerfiles.
 A high selling point of our platform is the use of a Kubernetes cluster, which ensures the autoscaling of all services.  
-This project is created with a security mindset, but can be used for other (non-security) purposes. The principle of "plug 'n play" is a definite here, just remove / add / replace the checks with your own scripts and you're good to go.
+This project is created with a security mindset, but can be used for other (non-security) purposes. The principle of "plug 'n play" is a definite here,
+just remove / add / replace the checks with your own scripts and you're good to go.  
 For more details about what lives in the environment, we refer you to our [wiki page](https://github.com/WatcherWhale/SecProA/wiki).  
 
 
@@ -49,16 +48,16 @@ A list of the libraries used in this project:
 <p align = "center">
     Powered by
     <p align= "center">
-        <img src="https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white">
-        <img src="https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white">
-        <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white">
-        <img src="https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white">
-        <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"> <br>
-        <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white">
-        <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
-        <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
-        <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"><br>
-        <img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white">
-        <img src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=for-the-badge&logo=alpine-linux&logoColor=white">
+        <a href="https://redis.io/"> <img src="https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white"> </a>
+        <a href="https://kubernetes.io/"> <img src="https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white"> </a>
+        <a href="https://www.docker.com/"> <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"> </a>
+        <a href="https://www.ansible.com/"> <img src="https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white">
+        <a href="https://expressjs.com/"> <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"> <br>
+        <a href="https://www.npmjs.com/"> <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white">
+        <a href="https://nodejs.org/en/"> <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
+        <a href="https://www.javascript.com/"> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
+        <a href="https://www.python.org/"> <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"><br>
+        <a href="https://eslint.org/"> <img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white">
+        <a href="https://alpinelinux.org/"> <img src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=for-the-badge&logo=alpine-linux&logoColor=white">
     </p>
 </p>
