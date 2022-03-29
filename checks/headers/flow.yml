@@ -1,0 +1,11 @@
+---
+name: headers
+tags:
+  - header
+  - passive
+type:
+  - domain
+stages:
+  - name: "Header check"
+    checks:
+      - headercheck.py
