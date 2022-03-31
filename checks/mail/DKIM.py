@@ -30,17 +30,13 @@ def dkimTest():
     try:
         test_dkim = test_dkims
         for dns_data in test_dkim:
+
             if 'DKIM1' in str(dns_data):
-
-                mes = "[PASS] DKIM record found."
-                score = 10
-
-                result = {"name": "DKIM check", "score": score, "message": mes}
+                result = {"name": "Mail: DKIM", "score": 10, "message": "DKIM record found."}
                 return result
+
     except:
-        mes = "[FAIL] DKIM record not found."
-        score = 0
-        result = {"name": "DKIM check", "score": score, "message": mes, "certain": False}
+        result = {"name": "Mail: DKIM", "score": 0, "message": "No DKIM record found.", "certain": False}
         return result
 
 envvar = os.environ.get("MX")

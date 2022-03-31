@@ -18,15 +18,13 @@ def spefTest(domain):
     try:
         test_spf = dns.resolver.resolve(domain , 'TXT')
         for dns_data in test_spf:
+
             if 'spf1' in str(dns_data):
-                mes = "[PASS] SPF record found."
-                score = 10
-                result = {"name": "SPF check", "score": score, "message": mes}
+                result = {"name": "Mail: SPF", "score": 10, "message": "SPF record found."}
                 return result
+
     except:
-        mes = "[FAIL] SPF record not found."
-        score = 0
-        result = {"name": "SPF check", "score": score, "message": mes}
+        result = {"name": "Mail: SPF", "score": 0, "message": "No SPF record found."}
         return result
 
 envvar = os.environ.get("MX")

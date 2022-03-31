@@ -152,16 +152,14 @@ if __name__ == "__main__":
         #headers check
         if value['warn'] == 1:
             if value['defined'] is False:
-                result.append({'name':header,"score":0,'message': header+" is missing"})
+                result.append({'name': "Header", "score":0, 'message': header + " is missing."})
             else:
-                result.append({'name':header,"score":0,'message': header+" contains value "+value['contents']})
+                result.append({'name': "Header", "score":0, 'message': header + " contains value: " + value['contents'] + "."})
         elif value['warn'] == 0:
             if value['defined'] is False:
-                result.append({'name':header,"score":10,'message': header+" is missing"})
+                result.append({'name': "Header", "score":10, 'message': header + " is missing."})
             else:
-                result.append({'name':header,"score":10,'message': header+" contains value "+value['contents']})
-
-
+                result.append({'name': "Header", "score":10, 'message': header + " contains value: " + value['contents'] + "."})
 
 jsonresult = json.dumps(result)
 print(jsonresult)

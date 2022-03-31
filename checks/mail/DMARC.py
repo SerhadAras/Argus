@@ -19,15 +19,13 @@ def dmarcTest(domain):
         test_dmarc = dns.resolver.resolve('_dmarc.' + domain , 'TXT')
 
         for dns_data in test_dmarc:
+
             if 'DMARC1' in str(dns_data):
-                mes = "[PASS] DMARC record found."
-                score = 10
-                result = {"name": "DMARC check", "score": score, "message": mes}
+                result = {"name": "Mail: DMARC", "score": 10, "message": "DMARK record found."}
                 return result
+
     except:
-        mes = "[FAIL] DMARC record not found."
-        score = 0
-        result = {"name": "DMARC check", "score": score, "message": mes}
+        result = {"name": "Mail: DMARC", "score": 0, "message": "No DMARC record found."}
         return result
 
 envvar = os.environ.get("MX")

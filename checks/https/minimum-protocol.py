@@ -33,14 +33,13 @@ for version in VERSIONS:
         if version == ssl.PROTOCOL_TLSv1 or version == ssl.PROTOCOL_TLSv1_1:
             badSSL = True
     except requests.exceptions.SSLError:
-        print(f'{{"name": "minimum-protocol", "score": 0, "certain": false, "message": "Er is iets mis met uw certificaat. Kan geen ssl-versie vinden" }}')
+        print(f'{{"name": "supported Protocol", "score": 0, "certain": false, "message": "No SSL-version found on domain {DOMAIN}." }}')
         quit()
     except:
         print({})
         quit()
 
 if badSSL:
-    print(f'{{"name": "minimum-protocol", "score": 0, "message": "Uw domein {DOMAIN} ondersteund tls 1.0 of tls 1.1." }}')
-
+    print(f'{{"name": "Supported Protocol", "score": 0, "message": "Domain {DOMAIN} supports TLS 1.0 or TLS 1.1." }}')
 elif not badSSL:
-    print(f'{{"name": "minimum-protocol", "score": 10, "message": "Uw domein {DOMAIN} ondersteund GEEN tls 1.0 of tls 1.1"}}')
+    print(f'{{"name": "Supported Protocol", "score": 10, "message": "Domain {DOMAIN} does not support TLS 1.0 of TLS 1.1"}}')

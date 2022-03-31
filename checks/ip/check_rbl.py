@@ -409,15 +409,15 @@ def main(argv, environ):
 
         # Status is CRITICAL
         if len(on_blacklist) >= 2:
-            print('{"name": "Blacklist", "score": 0, "message": "CRITICAL: %s"}' % output)
+            print('{"name": "Blacklist", "score": 0, "message": "Domain %s found on more than 2 blacklists."}' % output)
 
         # Status is WARNING
         elif len(on_blacklist) == 1:
-            print('{"name": "Blacklist", "score": 5, "message": "WARNING: %s"}' % output)
+            print('{"name": "Blacklist", "score": 5, "message": "Domain %s found on 1 blacklist."}' % output)
 
     else:
         # Status is OK and host is not blacklisted
-        print('{"name": "Blacklist", "score": 10, "message": "OK: %s not on any known blacklists"}'% host)
+        print('{"name": "Blacklist", "score": 10, "message": "Domain %s not found on known blacklists."}'% host)
 
 if __name__ == "__main__":
     main(sys.argv, os.environ)

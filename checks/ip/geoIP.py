@@ -18,14 +18,14 @@ def main(domain):
         for ipval in result:
             ip = ipval.to_text()
     except:
-        print("Er werd geen IP gevonden voor dit domein.", file=sys.stderr)
+        print("No IP address found for this domain.", file=sys.stderr)
         sys.exit()
 
     with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
         try:
             response = reader.city(ip)
         except:
-            print("IP werd niet gevonden in database", file=sys.stderr)
+            print("IP address not found in the database.", file=sys.stderr)
             sys.exit()
 
         country = response.country.iso_code
@@ -37,10 +37,10 @@ def main(domain):
             if i == country:
                 is_eu_land = True
         if is_eu_land:
-            print(f'{{"name": "geoIP", "score": 10, "message": "Uw website wordt gehost binnen de EU, meer bepaald in {country}"}}')
+            print(f'{{"name": "GeoIP", "score": 10, "message": "Website hosted inside Europe, country: {country}."}}')
 
         elif not is_eu_land:
-            print(f'{{"name": "geoIP", "score": 0, "message": "Uw website wordt niet gehost binnen de EU, meer bepaald in {country}, indien je persoonsgegevens verwerkt via je site kan dit problemen rond o.a. GDPR met zich meebrengen. Indien er geen persoonsgegevens verwerkt worden op je site, dan kan je deze score nuanceren."}}')
+            print(f'{{"name": "GeoIP", "score": 0, "message": "Website not hosted inside Europe, country: {country}."}}')
 
 if __name__ == "__main__":
     domain = sys.argv[1]

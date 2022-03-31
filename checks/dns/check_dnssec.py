@@ -50,19 +50,19 @@ def testdnssec(domain):
             status_noerror = 0
 
         if ad_flag == 1 and status_noerror == 1:
-            print('{"name": "DNSSEC", "score": 10/10, "message": "The domain %s is safe because it use a valid DNSSEC."}'%domain)
+            print('{"name": "DNSSEC", "score": 10, "message": "Domain %s is safe, it uses a valid DNSSEC."}'%domain)
             sys.exit(ExitOK)
         elif status_error == 1:
-            print('{"name": "DNSSEC", "score": 5/10, "message": "The domain %s uses DNSSEC, but this is invalid or misconfigured."}'%domain)
+            print('{"name": "DNSSEC", "score": 5, "message": "Domain %s uses DNSSEC but is misconfigured or invalid."}'%domain)
             sys.exit(ExitWarning)
         elif status_noerror == 1 and ad_flag == 0:
-            print('{"name": "DNSSEC", "score": 0, "message": "Domain %s does not use DNSSEC"}'%domain)
+            print('{"name": "DNSSEC", "score": 0, "message": "Domain %s does not use DNSSEC."}'%domain)
             sys.exit(ExitCritical)
         else:
-            print('{"name": "DNSSEC", "score": 0, "message": "Cannot read the result"}')
+            print('{"name": "DNSSEC", "score": 0, "message": "Cannot read the result."}')
             sys.exit(ExitUnknown)
     else:
-        print ('{"name": "DNSSEC", "score": 0, "message": "Impossible to check domains"}')
+        print ('{"name": "DNSSEC", "score": 0, "message": "Impossible to check domain."}')
         sys.exit(ExitUnknown)
 
 def main():

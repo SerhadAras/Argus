@@ -6,9 +6,9 @@ DOMAIN = sys.argv[1]
 try:
     result = dns.resolver.resolve(DOMAIN, 'AAAA')
 except:
-    print(f'{{"name": "ipv6", "score": 0, "message": "Uw domein {DOMAIN} heeft GEEN ipv6-adres."}}')
+    print(f'{{"name": "IPv6", "score": 0, "message": "Domain: {DOMAIN} does not have an IPv6 address."}}')
     exit()
 
 for ipval in result:
     print(ipval)
-    print(f'{{"name": "ipv6", "score": 10, "message": "Uw domein {DOMAIN} heeft een ipv6-adres: {ipval}"}}')
+    print(f'{{"name": "IPv6", "score": 10, "message": "Domain: {DOMAIN} has an IPv6 address: {ipval}."}}')

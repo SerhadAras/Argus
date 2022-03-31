@@ -17,7 +17,7 @@ except:
 else:
     versie = sslSocket.version()
     if "TLSv1.2" in versie or "TLSv1.3" in versie:
-        print(f'{{"name": "protocol", "score": 10, "message": "Uw domein {DOMAIN} gebruikt versie {versie}."}}')
+        print(f'{{"name": "Protocol", "score": 10, "message": "Domain {DOMAIN} uses version: {versie}."}}')
     else:
-        print(f'{{"name": "protocol", "score": 0, "message": "Uw domein {DOMAIN} gebruikt versie {versie}." }}')
+        print(f'{{"name": "Protocol", "score": 0, "message": "Domain {DOMAIN} uses version: {versie}, TLS version 1.2 or up required." }}')
     sslSocket.close()

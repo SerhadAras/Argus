@@ -18,6 +18,6 @@ except:
 else:
     new_url = res.url
     if HTTPS in new_url:
-        print(f'{{"name": "redirect", "score": 10, "message": "Alle potentieel onveilige verkeer via {url}, wordt veilig doorgestuurd naar {new_url}"}}')
+        print(f'{{"name": "Redirect HTTP", "score": 10, "message": "Redirection from http to https present: {url} to {new_url}."}}')
     else:
-        print(f'{{"name": "redirect", "score": 0, "message": "Uw website {url} is bereikbaar via het onbeveiligde http, dit betekent dat in bepaalde gevallen bezoekers onversleuteld gegevens naar uw website kunnen doorsturen. Misschien kan u een redirectie naar https opzetten?"}}')
+        print(f'{{"name": "Redirect HTTP", "score": 0, "message": "No redirection from http to https present."}}')
