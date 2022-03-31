@@ -1,6 +1,6 @@
-from distutils.log import error
 import sys
 import os
+import time
 
 import yaml
 import json
@@ -13,8 +13,11 @@ class Flow:
     """
 
     def __init__(self, logger):
+        self.running = True
+
         self.logger = logger
         self.logger.info("loading flow")
+
         self.load()
 
     def load(self):
@@ -31,6 +34,12 @@ class Flow:
             str: The name of the flow.
         """
         return self.flow['name']
+
+    def stop(self):
+        """
+        Stop service
+        """
+        self.running = False
 
     def run(self, domain: str) -> list:
         """Run the flow on a specific domain.
@@ -64,6 +73,25 @@ class Flow:
             for check in stage['checks']:
                 checks.append(Popen([sys.executable, os.path.join(os.getcwd(), check), domain], stdout=PIPE, encoding="utf-8", env=env))
 
+            busy = True
+
+            while busy and self.running:
+                busy = False
+
+                for check in checks:
+                    busy = busy or check.poll() is None
+
+                if busy and self.running:
+                    time.sleep(0.01)
+
+            if not self.running:
+                self.logger.info("Killing sub processes.", self.flow['name'])
+                for check in checks:
+                    check.kill()
+
+                self.logger.info("Killed all sub process, returning.", self.flow['name'])
+                return None
+
             for check in checks:
                 output, err = check.communicate()
 
@@ -91,7 +119,7 @@ class Flow:
                     # JSON Decoding error logging
                     self.logger.error(f"JSON Format error: {err}", self.getName())
                     self.logger.error(f"Output: {output}", self.getName())
-                except:
+                except Exception as error:
                     self.logger.error(f"an exception has occured: {error}", self.getName())
 
         return results

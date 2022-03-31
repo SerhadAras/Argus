@@ -62,6 +62,11 @@ class Redis
         return this.client.rpush(key, JSON.stringify(value));
     }
 
+    insertFront(key, value)
+    {
+        return this.client.lpush(key, JSON.stringify(value));
+    }
+
     /**
      * @param {string} key
      * @returns {Promise<string>}

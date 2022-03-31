@@ -39,4 +39,12 @@ router.post("/results", async (req, res) => {
     res.status(201).send({status: 201, message: "Results successfully registered."});
 });
 
+router.post("/pushback", async (req, res) => {
+
+    await redis.insertFront("jobs:" + req.body.id, req.body.domain);
+
+    res.status(201).send({status: 201, message: "Job succesfully inserted"});
+
+});
+
 service.start();
