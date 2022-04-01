@@ -1,4 +1,11 @@
 #!/bin/bash
 
-docker build --no-cache -f Dockerfile --build-arg service=gateway -t ghcr.io/watcherwhale/gateway .
-docker build --no-cache -f Dockerfile --build-arg service=sequencer -t ghcr.io/watcherwhale/sequencer .
+if [ -z "$1" ];
+then
+    REGISTRY="ghcr.io/watcherwhale"
+else
+    REGISTRY="$1"
+fi
+
+docker build --no-cache -f Dockerfile --build-arg service=gateway -t $REGISTRY/gateway .
+docker build --no-cache -f Dockerfile --build-arg service=sequencer -t $REGISTRY/sequencer .

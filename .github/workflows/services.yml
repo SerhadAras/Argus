@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build service images
-        run: ./.actions/build.sh
+        run: ./.actions/build.sh ${GITHUB_SHA}
         working-directory: services
