@@ -22,7 +22,7 @@ docker:
   # - Never
   # - Always
   # - IfNotPresent
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 redis:
   # Docker tag of the redis pods
@@ -48,7 +48,7 @@ gateway:
 
   # Amount of gateway minimum and maximum replicas.
   replicas:
-    min: 3
+    min: 1
     max: 10
 
   # The docker tag to pull
@@ -67,10 +67,19 @@ sequencer:
 
   # Amount of sequencer minimum and maximum replicas.
   replicas:
-    min: 3
+    min: 1
     max: 10
 
   # The docker tag to pull
+  tag: latest
+
+certmaster:
+  loglevel: http
+
+  replicas:
+    min: 1
+    max: 3
+
   tag: latest
 
 # All checklists to deploy (and/or build) to the cluster.

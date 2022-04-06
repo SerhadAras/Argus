@@ -23,9 +23,12 @@
                 app: "checklist"
             template:
               metadata:
+                annotations:
+                  autocert.step.sm/name: "{{ item.name }}-checklist"
                 labels:
                   app: "checklist"
               spec:
+                metadata:
                 imagePullSecrets: "{{ docker.imagePullSecrets }}"
                 containers:
                   - name: "{{ item.name }}-checklist"
@@ -33,7 +36,15 @@
                     imagePullPolicy: "{{ docker.pullPolicy }}"
                     env:
                       - name: SEQUENCER_URL
-                        value: "http://sequencer-server:3000"
+                        value: "https://sequencer-server:3000"
+
+                      # Certificates
+                      - name: CERT_PATH
+                        value: "/var/run/autocert.step.sm/site.crt"
+                      - name: KEY_PATH
+                        value: "/var/run/autocert.step.sm/site.key"
+                      - name: CA_PATH
+                        value: "/var/run/autocert.step.sm/root.crt"
 
     - name: Deploy Autoscaler
       with_items: "{{ checklists }}"
@@ -46,9 +57,17 @@
           kind: CustomPodAutoscaler
           metadata:
             name: "{{ item.name }}-autoscaler"
+            annotations:
+              autocert.step.sm/name: "{{ item.name }}-autoscaler"
           spec:
             template:
+              metadata:
+                annotations:
+                  autocert.step.sm/name: "{{ item.name }}-autoscaler"
               spec:
+                metadata:
+                  annotations:
+                    autocert.step.sm/name: "{{ item.name }}-autoscaler"
                 imagePullSecrets: "{{ docker.imagePullSecrets }}"
                 containers:
                   - name: "{{ item.name }}-autoscaler"

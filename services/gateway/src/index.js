@@ -1,7 +1,7 @@
 const { v4: uuid } = require("uuid");
 const createService = require("service");
 
-const service = createService("gateway", "/api/v1");
+const service = createService("gateway", "/api/v1/checks");
 const { redis, router } = service;
 
 router.post("/request", async (req, res) => {

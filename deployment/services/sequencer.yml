@@ -20,6 +20,8 @@
                 app: "sequencer"
             template:
               metadata:
+                annotations:
+                  autocert.step.sm/name: "sequencer-server"
                 labels:
                   app: "sequencer"
               spec:
@@ -38,8 +40,11 @@
                         memory: "50Mi"
                         cpu: "300m"
                     env:
+                      # Web port
                       - name: PORT
                         value: "3000"
+
+                      # Redis settings
                       - name: REDIS_HOST
                         value: "redis"
                       - name: REDIS_PORT
@@ -49,8 +54,17 @@
                           secretKeyRef:
                             name: redis
                             key: redis-password
+
                       - name: LOGLEVEL
                         value: "{{ sequencer.loglevel }}"
+
+                      # Certificates
+                      - name: CERT_PATH
+                        value: "/var/run/autocert.step.sm/site.crt"
+                      - name: KEY_PATH
+                        value: "/var/run/autocert.step.sm/site.key"
+                      - name: CA_PATH
+                        value: "/var/run/autocert.step.sm/root.crt"
 
     - name: Deploy Sequencer Service
       kubernetes.core.k8s:

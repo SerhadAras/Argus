@@ -11,17 +11,25 @@ class Redis
      * @param {string} host
      * @param {number} port
      */
-    constructor(host, port=26379, password = "")
+    constructor(host, port=26379, sentinel = true, password = "")
     {
-        const options = {
-            sentinels: [
-                {
-                    port: port,
-                    host: host
-                }
-            ],
-            name: "mymaster"
+        let options = {
+            host: host,
+            port: port
         };
+
+        if(sentinel)
+        {
+            options = {
+                sentinels: [
+                    {
+                        port: port,
+                        host: host
+                    }
+                ],
+                name: "mymaster"
+            };
+        }
 
         if(password)
         {
@@ -59,7 +67,18 @@ class Redis
      */
     insert(key, value)
     {
-        return this.client.rpush(key, JSON.stringify(value));
+        return this.insertStr(key, JSON.stringify(value));
+    }
+
+    /**
+     * @param {string} key
+     * @param {any} value The value to set
+     * @returns {Promise<number>}
+     * returns Key with value according to the FIFO principle
+     */
+    insertStr(key, value)
+    {
+        return this.client.rpush(key, value);
     }
 
     insertFront(key, value)
@@ -107,6 +126,11 @@ class Redis
     length(key)
     {
         return this.client.llen(key);
+    }
+
+    getAll(key)
+    {
+        return this.client.lrange(key, 0, -1);
     }
 
     /**

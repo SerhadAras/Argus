@@ -1,0 +1,18 @@
+---
+- name: Deploy Automatic Certificate Provisioning
+  hosts: localhost
+  tasks:
+    - name: Add Helm Repo
+      kubernetes.core.helm_repository:
+        name: smallstep
+        repo_url: https://smallstep.github.io/helm-charts/
+
+    - name: Install Certificate Provisioner
+      kubernetes.core.helm:
+        name: autocert
+        chart_ref: smallstep/autocert
+        namespace: "{{ cluster.namespace }}"
+        values:
+          autocert:
+            image:
+              pullPolicy: "{{ docker.pullPolicy }}"

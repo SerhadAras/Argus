@@ -55,3 +55,57 @@
         namespace: "{{ cluster.namespace }}"
         kind: HorizontalPodAutoscaler
         name: gateway-autoscaler
+
+    - name: Remove Service Account
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master
+        kind: ServiceAccount
+        namespace: "{{ cluster.namespace }}"
+
+    - name: Remove ClusterRole
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master-role
+        kind: ClusterRole
+        namespace: "{{ cluster.namespace }}"
+
+    - name: Remove ClusterRoleBinding
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master-role
+        kind: ClusterRole
+        namespace: "{{ cluster.namespace }}"
+
+    - name: Remove cert-master Deployment
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master
+        kind: Deployment
+        namespace: "{{ cluster.namespace }}"
+
+    - name: Remove cert-master Service
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master-server
+        kind: Service
+        namespace: "{{ cluster.namespace }}"
+
+    - name: Remove cert-master Service
+      tags:
+        - cert-master
+      kubernetes.core.k8s:
+        state: absent
+        name: cert-master-autoscaler
+        kind: HorizontalPodAutoscaler
+        namespace: "{{ cluster.namespace }}"

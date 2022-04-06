@@ -13,15 +13,13 @@
         chart_ref: bitnami/redis
         namespace: "{{ cluster.namespace }}"
         values:
-          commonLabels:
-            app: redis
-
           master:
             persistence:
               enabled: "{{ redis.persistence }}"
 
           replica:
             replicaCount: "{{ redis.replicas }}"
+
             persistence:
               enabled: "{{ redis.persistence }}"
 

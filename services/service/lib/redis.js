@@ -2,13 +2,13 @@ const process = require("process");
 const LogFile = require("logfile");
 const RedisClient = require("redis");
 
-module.exports = (serviceName) => {
+module.exports = (serviceName, useSentinel = true) => {
     const logFile = LogFile.createLogFile(serviceName);
     const logger = logFile.getLogger();
 
     // Create redis client
     const redisClient = new RedisClient(process.env.REDIS_HOST || "localhost",
-        process.env.REDIS_PORT || 26379, process.env.REDIS_PASSWORD || "");
+        process.env.REDIS_PORT || 26379, useSentinel, process.env.REDIS_PASSWORD || "");
 
     // Register redis events
     redisClient.onError((err) => {

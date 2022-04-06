@@ -11,7 +11,15 @@
           kind: Ingress
           metadata:
             name: "{{ app.name }}-ingress"
+
+            annotations:
+              nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+              nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+              nginx.ingress.kubernetes.io/secure-backends: "true"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+              nginx.ingress.kubernetes.io/auth-tls-secret: "{{ cluster.namespace }}/autocert-ca-certificate"
           spec:
+            ingressClassName: nginx
             tls:
               - hosts:
                   - 'argus.local'
@@ -20,7 +28,14 @@
               - host: "{{ app.host }}"
                 http:
                   paths:
-                    - path: /api/v1
+                    - path: /api/v1/certificate
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: cert-master-server
+                          port:
+                            number: 3000
+                    - path: /api/v1/checks
                       pathType: Prefix
                       backend:
                         service:

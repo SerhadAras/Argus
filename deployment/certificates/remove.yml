@@ -1,11 +1,9 @@
 ---
-- name: "Remove Redis Deployments"
+- name: "Remove Autocert Provisioner"
   hosts: localhost
   tasks:
-    - name: Remove Redis cluster
-      tags:
-        - redis
+    - name: Remove Autocert Provisioner
       kubernetes.core.helm:
-        name: redis
+        name: smallstep
         namespace: "{{ cluster.namespace }}"
         state: absent

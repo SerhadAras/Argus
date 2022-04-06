@@ -3,14 +3,18 @@ const LogFile = require("logfile");
 const createRedis = require("./redis.js");
 const app = require("./web.js");
 
-module.exports = (serviceName, path = "") => {
+module.exports = (serviceName, path, options = { redis: { enabled : true, sentinel: true } }) => {
 
     // Create logger
     const logFile = LogFile.createLogFile(serviceName, process.env.LOGLEVEL || "http");
     const logger = logFile.getLogger();
 
     // Create Redis client
-    const redis = createRedis(serviceName);
+    let redis;
+    if(options.redis.enabled)
+    {
+        redis = createRedis(serviceName, options.redis.sentinel);
+    }
 
     let server;
 
@@ -21,7 +25,10 @@ module.exports = (serviceName, path = "") => {
     {
         logger.info("Shutting down " + serviceName + ".");
 
-        redis.disconnect();
+        if(options.redis.enabled)
+        {
+            redis.disconnect();
+        }
 
         if(server)
         {

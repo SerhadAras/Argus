@@ -80,6 +80,9 @@ module.exports = {
         ],
         "no-tabs": [
             "error"
+        ],
+        "no-async-promise-executor": [
+            "off"
         ]
     }
 };
