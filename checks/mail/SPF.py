@@ -1,15 +1,22 @@
 #!/usr/bin/python3
-import argparse
-import dns.resolver
-import json
 import os
+import sys
+import json
+import dns.resolver
 
-parser = argparse.ArgumentParser(description='Simple SPF quick test.')
-parser.add_argument('domain', help='Domain name to test')
-args = parser.parse_args()
-domain = args.domain
+def main(domain: str):
+    """main.
 
-def spefTest(domain):
+    Args:
+        domain (str): domain
+    """
+    if os.environ.get("MX") is None:
+        print("{}")
+        return
+
+    print(json.dumps(spfTest(domain)))
+
+def spfTest(domain):
     """Test if a SPF record is found for a specific domain.
 
     Returns:
@@ -27,10 +34,5 @@ def spefTest(domain):
         result = {"name": "Mail: SPF", "score": 0, "message": "No SPF record found."}
         return result
 
-envvar = os.environ.get("MX")
-if envvar is not None:
-    result = spefTest(domain)
-    jsonresult = json.dumps(result)
-else:
-    jsonresult = {}
-print(jsonresult)
+if __name__ == "__main__":
+    main(sys.argv[1])

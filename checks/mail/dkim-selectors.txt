@@ -1,0 +1,16 @@
+selector1
+selector2
+google
+everlytickey1
+everlytickey2
+k1
+mxvault
+dkim
+default
+scph0619
+20210112
+r22
+selector-ccc
+admin
+smtp
+eversrv

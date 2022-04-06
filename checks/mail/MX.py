@@ -1,22 +1,18 @@
 #!/usr/bin/python3
-import argparse
-import dns.resolver
-import json
+
 import os
+import sys
+import json
+import dns.resolver
 
-parser = argparse.ArgumentParser(description = 'Simple MX quick test.')
-parser.add_argument('domain', help = 'Domain name to test')
-args = parser.parse_args()
-domain = args.domain
-
-def mxTest(domain):
+def mxTest(domain: str) -> dict:
     """Test if MX record found to start new stage
 
     Args:
-        domain (any): you need give domain to the check
-    Returns:
+        domain (str): The domain to check.
 
-        json: decide to start other checks
+    Returns:
+        dict: Output object
     """
     try:
         for x in dns.resolver.resolve(domain, 'MX'):
@@ -24,8 +20,8 @@ def mxTest(domain):
             return res
     except:
         res = {}
+
     return res
 
-response = mxTest(domain)
-jsonresult = json.dumps(response)
-print(jsonresult)
+if __name__ == "__main__":
+    print(json.dumps(mxTest(sys.argv[1])))

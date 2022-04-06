@@ -11,6 +11,6 @@ type:
 stages:
   - name: IP Checks
     checks:
-      - check_rbl.py
+      - blocklist.py
       - geoIP.py
       - ipv6.py

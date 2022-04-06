@@ -119,7 +119,9 @@ class Flow:
                     # JSON Decoding error logging
                     self.logger.error(f"JSON Format error: {err}", self.getName())
                     self.logger.error(f"Output: {output}", self.getName())
+                    return None
                 except Exception as error:
                     self.logger.error(f"an exception has occured: {error}", self.getName())
+                    return None
 
         return results

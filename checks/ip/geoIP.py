@@ -1,11 +1,9 @@
 #! /usr/bin/env python3
-import string
-import geoip2.database
-import sys
-import dns.resolver
 import re
-
-
+import sys
+import json
+import dns.resolver
+import geoip2.database
 
 def main(domain):
     """Check if a domain is hosted in the EU.
@@ -13,34 +11,62 @@ def main(domain):
     Args:
         domain (str): The domain to check.
     """
+    ips = []
+    results = []
+
     try:
         result = dns.resolver.resolve(domain)
         for ipval in result:
-            ip = ipval.to_text()
+            ips.append(ipval.to_text())
     except:
         print("No IP address found for this domain.", file=sys.stderr)
         sys.exit()
 
     with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
-        try:
-            response = reader.city(ip)
-        except:
-            print("IP address not found in the database.", file=sys.stderr)
-            sys.exit()
+        for ip in ips:
+            results.append(checkIp(ip, reader))
 
-        country = response.country.iso_code
-        eu_country = ["BE", "BG", "CZ", "DK", "DE", "EE", "IE", "EL", "ES", "FR", "HR", "IT", "CY",
-                      "LV", "LT", "LU", "HU", "MT", "NL", "AT", "PL", "PT", "RO", "SI", "SK", "FI", "SE", "UK"]
+    print(json.dumps(results))
 
-        is_eu_land = False
-        for i in eu_country:
-            if i == country:
-                is_eu_land = True
-        if is_eu_land:
-            print(f'{{"name": "GeoIP", "score": 10, "message": "Website hosted inside Europe, country: {country}."}}')
 
-        elif not is_eu_land:
-            print(f'{{"name": "GeoIP", "score": 0, "message": "Website not hosted inside Europe, country: {country}."}}')
+def checkIp(ip: str, reader: geoip2.database.Reader) -> dict:
+    """Check if an ip is in the EU.
+
+    Args:
+        ip (str): The ip to check
+        reader (geoip2.database.Reader): The GeoIP list reader.
+
+    Returns:
+        dict: A result.
+    """
+    try:
+        response = reader.city(ip)
+    except:
+        print("IP address not found in the database.", file=sys.stderr)
+        return {}
+
+    country = response.country.iso_code
+    eu_country = ["BE", "BG", "CZ", "DK", "DE", "EE", "IE", "EL", "ES", "FR", "HR", "IT", "CY",
+                  "LV", "LT", "LU", "HU", "MT", "NL", "AT", "PL", "PT", "RO", "SI", "SK", "FI", "SE", "UK"]
+
+    is_eu_land = False
+    for i in eu_country:
+        if i == country:
+            is_eu_land = True
+    if is_eu_land:
+        return {
+            "name": "GeoIP",
+            "score": 10,
+            "message": f"{ip} is hosted in the EU.",
+            "value": ip
+        }
+    elif not is_eu_land:
+        return {
+            "name": "GeoIP",
+            "score": 0,
+            "message": f"{ip} is not hosted in the EU.",
+            "value": ip
+        }
 
 if __name__ == "__main__":
     domain = sys.argv[1]

@@ -1,48 +1,53 @@
 #!/usr/bin/python3
-import argparse
+import sys
 import dns.resolver
 import json
 import os
 
-parser = argparse.ArgumentParser(description = 'Simple DKIM quick test.')
-parser.add_argument('domain', help = 'Domain name to test')
-args = parser.parse_args()
-domain = args.domain
+def main(domain: str):
+    """main.
 
-listselectors = ["selector1","selector2","google","everlytickey1","everlytickey2","eversrv","k1","mxvault","dkim","default"]
+    Args:
+        domain (str): domain
+    """
+    if os.environ.get("MX") is None:
+        print("{}")
+        return
 
-listselectors.append(domain.replace(".", ""))
-listselectors.extend(domain.split(".")[:-1])
+    # Load possible selectors
+    with open("./dkim-selectors.txt") as file:
+        selectorList = list(map(str.strip, file.readlines()))
 
-for selector in listselectors:
-    try:
-        test_dkims = dns.resolver.resolve(selector + '._domainkey.' + domain , 'TXT')
-        break
-    except:
-        pass
+    # Append domain specific selectors
+    selectorList.append(domain.replace(".", ""))
+    selectorList.extend(domain.split(".")[:-1])
 
-def dkimTest():
+    # Print test results
+    print(json.dumps(dkimTest(domain, selectorList)))
+
+def dkimTest(domain: str , selectorList: list) -> dict:
     """Test if a DKIM record is found for a specific domain.
 
     Returns:
         dict: A result object.
     """
-    try:
-        test_dkim = test_dkims
-        for dns_data in test_dkim:
 
-            if 'DKIM1' in str(dns_data):
-                result = {"name": "Mail: DKIM", "score": 10, "message": "DKIM record found."}
-                return result
+    # Check if a DKIM selector is found
+    hasDKIM = False
+    for selector in selectorList:
+        try:
+            test_dkims = dns.resolver.resolve(selector + '._domainkey.' + domain , 'TXT')
+            hasDKIM = True
+            break
+        except:
+            pass
 
-    except:
+    if hasDKIM:
+        result = {"name": "Mail: DKIM", "score": 10, "message": "DKIM record found."}
+    else:
         result = {"name": "Mail: DKIM", "score": 0, "message": "No DKIM record found.", "certain": False}
-        return result
 
-envvar = os.environ.get("MX")
-if envvar is not None:
-    result = dkimTest()
-    jsonresult = json.dumps(result)
-else:
-    jsonresult = {}
-print(jsonresult)
+    return result
+
+if __name__ == "__main__":
+    main(sys.argv[1])

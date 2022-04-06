@@ -1,15 +1,22 @@
 #!/usr/bin/python3
-import argparse
+import sys
 import json
 import dns.resolver
 import os
 
-parser = argparse.ArgumentParser(description = 'Simple DMARC quick test.')
-parser.add_argument('domain', help = 'Domain name to test')
-args = parser.parse_args()
-domain = args.domain
+def main(domain: str):
+    """main.
 
-def dmarcTest(domain):
+    Args:
+        domain (str): domain
+    """
+    if os.environ.get("MX") is None:
+        print("{}")
+        return
+
+    print(json.dumps(dmarcTest(domain)))
+
+def dmarcTest(domain: str) -> dict:
     """Test if a DMARC record is found for a specific domain.
 
     Returns:
@@ -28,10 +35,5 @@ def dmarcTest(domain):
         result = {"name": "Mail: DMARC", "score": 0, "message": "No DMARC record found."}
         return result
 
-envvar = os.environ.get("MX")
-if envvar is not None:
-    result = dmarcTest(domain)
-    jsonresult = json.dumps(result)
-else:
-    jsonresult = {}
-print(jsonresult)
+if __name__ == "__main__":
+    main(sys.argv[1])

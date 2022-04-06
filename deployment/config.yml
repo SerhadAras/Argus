@@ -93,7 +93,7 @@ checklists:
 
     # Amount of jobs one instance can handle
     #  in the specified interval.
-    throughput: 20
+    throughput: 100
 
     # The interval (miliseconds) to periodicaly check
     #  the size of the queue, and down/up scale
@@ -114,7 +114,7 @@ checklists:
 
     # Amount of jobs one instance can handle
     #  in the specified interval.
-    throughput: 20
+    throughput: 50
 
     # The interval (miliseconds) to periodicaly check
     #  the size of the queue, and down/up scale
@@ -127,7 +127,6 @@ checklists:
     replicas:
       min: 1
       max: 5
-
 
   - name: https
 
@@ -142,8 +141,7 @@ checklists:
     #  the size of the queue, and down/up scale
     interval: 10000
 
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
+    # Amount of time (seconds) to stabilize downscaling.
     stabilization: 200
 
     # Define the range of amount of replicas to deploy.
@@ -158,20 +156,19 @@ checklists:
 
     # Amount of jobs one instance can handle
     #  in the specified interval.
-    throughput: 20
+    throughput: 1
 
     # The interval (miliseconds) to periodicaly check
     #  the size of the queue, and down/up scale
     interval: 10000
 
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
+    # Amount of time (seconds) to stabilize downscaling.
     stabilization: 200
 
     # Define the range of amount of replicas to deploy.
     replicas:
       min: 1
-      max: 5
+      max: 10
 
   - name: mail
 

@@ -14,6 +14,6 @@ stages:
   - name: HTTPS Checks
     checks:
       - redirect.py
-      - certificaat.py
+      - certificate.py
       - protocol.py
-      - minimum-protocol.py
+      - supported-protocol.py

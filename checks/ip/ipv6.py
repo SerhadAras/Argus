@@ -1,5 +1,6 @@
-import dns.resolver
 import sys
+import json
+import dns.resolver
 
 DOMAIN = sys.argv[1]
 
@@ -9,6 +10,14 @@ except:
     print(f'{{"name": "IPv6", "score": 0, "message": "Domain: {DOMAIN} does not have an IPv6 address."}}')
     exit()
 
-for ipval in result:
-    print(ipval)
-    print(f'{{"name": "IPv6", "score": 10, "message": "Domain: {DOMAIN} has an IPv6 address: {ipval}."}}')
+ips = []
+for ipVal in result:
+    ips.append(str(ipVal))
+
+
+print(json.dumps({
+    "name": "IPv6",
+    "score": 10,
+    "message": f"Domain: {DOMAIN} has one or more IPv6 addresses.",
+    "value": ips
+}))

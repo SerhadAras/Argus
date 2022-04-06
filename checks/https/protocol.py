@@ -1,8 +1,5 @@
 import socket, sys, ssl
 
-from isort import file
-
-
 DOMAIN = sys.argv[1]
 context = ssl._create_unverified_context()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

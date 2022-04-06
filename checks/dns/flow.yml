@@ -8,4 +8,4 @@ type:
 stages:
   - name: DNS Checks
     checks:
-      - check_dnssec.py
+      - dnssec.py

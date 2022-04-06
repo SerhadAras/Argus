@@ -8,4 +8,4 @@ type:
 stages:
   - name: "Header check"
     checks:
-      - headercheck.py
+      - headers.py

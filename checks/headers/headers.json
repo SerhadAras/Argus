@@ -1,0 +1,122 @@
+{
+    "x-frame-options": {
+        "present": true,
+        "values": [
+            {
+                "pattern": "deny",
+                "score": 10
+            },
+            {
+                "pattern": "sameorigin",
+                "score": 10
+            }
+        ]
+    },
+    "x-xss-protection": {
+        "present": false,
+        "values": [
+            {
+                "pattern": "^0",
+                "score": 0
+            },
+            {
+                "pattern": "^1$",
+                "score": 9
+            },
+            {
+                "pattern": "^1; mode=block",
+                "score": 10
+            }
+        ]
+    },
+    "x-content-type-options": {
+        "present": true,
+        "values": [
+            {
+                "pattern": "nosniff",
+                "score": 10
+            }
+        ]
+    },
+    "referrer-policy": {
+        "present": true,
+        "values": [
+            {
+                "pattern": "strict-origin-when-cross-origin",
+                "score": 10
+            }
+        ]
+    },
+    "content-type": {
+        "present": true,
+        "values": [
+            {
+                "pattern": "text/html;\\ *charset=utf-8",
+                "score": 10
+            }
+        ]
+    },
+    "strict-transport-security": {
+        "present": true,
+        "values": [
+            {
+                "pattern": "max-age=\\d+\\ *;\\ *includeSubDomains\\ *;\\ *preload",
+                "score": 10
+            },
+            {
+                "pattern": "max-age=\\d+\\ *;\\ *preload\\ *;\\ *includeSubDomains",
+                "score": 10
+            },
+            {
+                "pattern": "max-age=\\d+\\ *;\\ *preload",
+                "score": 8
+            },
+            {
+                "pattern": "max-age=\\d+\\ *;\\ *includeSubDomains",
+                "score": 8
+            },
+            {
+                "pattern": "max-age=\\d+",
+                "score": 5
+            }
+        ]
+    },
+    "access-control-allow-origin": {
+        "present": null,
+        "values": [
+            {
+                "pattern": "\\*",
+                "score": 0
+            }
+        ]
+    },
+    "server": {
+        "present": false,
+        "values": [
+            {
+                "pattern": "cloudflare",
+                "score": 10
+            },
+            {
+                "pattern": "website",
+                "score": 10
+            },
+            {
+                "pattern": "webserver",
+                "score": 10
+            }
+        ]
+    },
+    "x-powered-by": {
+        "present": false,
+        "values": []
+    },
+    "x-aspnet-version": {
+        "present": false,
+        "values": []
+    },
+    "x-aspnetmvc-version": {
+        "present": false,
+        "values": []
+    }
+}

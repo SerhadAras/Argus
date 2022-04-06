@@ -1,4 +1,4 @@
 requests
-isort
 datetime
 urllib3
+pyopenssl
