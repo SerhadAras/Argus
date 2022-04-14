@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DIRS="$(find . -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
 
 if [ "$1" ];

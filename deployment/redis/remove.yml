@@ -7,5 +7,5 @@
         - redis
       kubernetes.core.helm:
         name: redis
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         state: absent

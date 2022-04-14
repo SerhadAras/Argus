@@ -5,24 +5,24 @@
     - name: Create Service Account
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           apiVersion: v1
           kind: ServiceAccount
           metadata:
             name: cert-master
-            namespace: "{{ cluster.namespace }}"
+            namespace: "{{ app.namespace }}"
 
     - name: Create ClusterRole
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           apiVersion: rbac.authorization.k8s.io/v1
           kind: ClusterRole
           metadata:
             name: cert-master-role
-            namespace: "{{ cluster.namespace }}"
+            namespace: "{{ app.namespace }}"
           rules:
             - apiGroups:
                 - ""
@@ -35,7 +35,7 @@
     - name: Create ClusterRoleBinding
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           kind: ClusterRoleBinding
           apiVersion: rbac.authorization.k8s.io/v1
@@ -48,12 +48,12 @@
           subjects:
             - kind: ServiceAccount
               name: cert-master
-              namespace: "{{ cluster.namespace }}"
+              namespace: "{{ app.namespace }}"
 
     - name: "Deploy cert-master"
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           apiVersion: apps/v1
           kind: Deployment
@@ -116,14 +116,14 @@
                       - name: CA_PATH
                         value: "/var/run/autocert.step.sm/root.crt"
                       - name: CA_URL
-                        value: "autocert-step-certificates.{{ cluster.namespace }}.svc.cluster.local"
+                        value: "autocert-step-certificates.{{ app.namespace }}.svc.cluster.local"
                       - name: NAMESPACE
-                        value: "{{ cluster.namespace }}"
+                        value: "{{ app.namespace }}"
 
     - name: Deploy cert-master Service
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           apiVersion: v1
           kind: Service
@@ -142,7 +142,7 @@
       when: "autoscaler.enabled == true"
       kubernetes.core.k8s:
         state: present
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         definition:
           apiVersion: autoscaling/v1
           kind: HorizontalPodAutoscaler

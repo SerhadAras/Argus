@@ -1,3 +1,4 @@
+const process = require("process");
 const createService = require("service");
 
 const service = createService("sequencer", "/api/v1");
@@ -47,4 +48,4 @@ router.post("/pushback", async (req, res) => {
 
 });
 
-service.start();
+service.start( (process.env.TLS_ENABLED || "TRUE").toLowerCase() === "true");

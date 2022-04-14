@@ -47,7 +47,7 @@ module.exports = (serviceName, path, options = { redis: { enabled : true, sentin
         logger: logger,
         redis: redis,
         router: app.router,
-        start: () => server = app.start(serviceName, path),
+        start: (clientAuth = true) => server = app.start(serviceName, path, clientAuth),
         shutdown: shutdown
     };
 };

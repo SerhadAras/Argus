@@ -11,7 +11,7 @@
       kubernetes.core.helm:
         name: autocert
         chart_ref: smallstep/autocert
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         values:
           autocert:
             image:

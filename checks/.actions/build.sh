@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DIRS="$(find . -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
 
 if [ -z "$1" ];
@@ -14,9 +16,4 @@ do
     echo "#############################################"
     echo "Building flow $DIR"
     docker build --no-cache -f Dockerfile --build-arg checklist=$DIR --build-arg registry=$REGISTRY -t $REGISTRY/checklist:$DIR-latest .
-
-    if [ "$?" != "0" ];
-    then
-        exit 1
-    fi
 done

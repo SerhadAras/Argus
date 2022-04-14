@@ -4,12 +4,12 @@
   tasks:
     - name: "Remove Ingress"
       tags:
-        - Ingress
+        - ingress
       kubernetes.core.k8s:
         state: absent
         kind: Ingress
         name: "{{ app.name }}-ingress"
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
 
     - name: "Remove Namespace"
       tags:
@@ -17,4 +17,4 @@
       kubernetes.core.k8s:
         state: absent
         kind: Namespace
-        name: "{{ cluster.namespace }}"
+        name: "{{ app.namespace }}"

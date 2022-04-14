@@ -6,9 +6,38 @@ app:
   # The hostname for the ingress endpoint.
   host: argus.local
 
-cluster:
   # The kubernetes namespace to deploy to
   namespace: argus
+
+  security:
+    cluster:
+      # Enable/Disable TLS Encryption and
+      #  Client Authorization in the cluster.
+      #
+      #  If the kubernetes environment does not provide
+      #  encrypted node to node connections, enable this.
+      #
+      #  Default: false
+      tls: false
+
+    ingress:
+      # Enable/Disable Client Authorization
+      #  at the ingress.
+      #
+      #  Use mTLS to authorize clients at the ingress,
+      #  but not further.
+      #
+      #  Default: true
+      clientAuth: true
+
+      # Can be left empty when:
+      #  app.security.cluster.tls is enabled
+      #  or
+      #  clientAuth is disabled
+      caSecret: ""
+
+      # The tls secret for the ingress
+      tlsSecret: "argus-tls"
 
 docker:
   # Registry / account to push the images to
@@ -30,9 +59,13 @@ redis:
 
   # Amount of redis database replicas
   # Must be at least 3
+  #
+  # Default: 3
   replicas: 3
 
-  # Persistent storage
+  # Persist redis database to disk
+  #
+  # Default: fase
   persistence: false
 
 gateway:
@@ -222,6 +255,7 @@ fluentd:
   custom:
     enabled: false
 
+# Autoscaling based on throughput
 autoscaler:
   enabled: true
 

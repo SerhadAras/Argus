@@ -6,7 +6,7 @@
       with_items: "{{ checklists }}"
       kubernetes.core.k8s:
         state: absent
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         name: "{{ item.name }}-checklist"
         kind: Deployment
 
@@ -16,4 +16,4 @@
         state: absent
         kind: CustomPodAutoscaler
         name: "{{ app.name }}-{{ item.name }}-autoscaler"
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"

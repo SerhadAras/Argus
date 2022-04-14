@@ -50,8 +50,5 @@ RUN npm ci --production
 # Copy src files
 COPY --chown=node:node ./$service/src/ ./
 
-# Copy scripts
-COPY --chown=node:node ./$service/*.sh ./
-
 # Set entrypoint
 CMD [ "node", "index.js" ]

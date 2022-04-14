@@ -11,7 +11,7 @@
       kubernetes.core.helm:
         name: redis
         chart_ref: bitnami/redis
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         values:
           master:
             persistence:

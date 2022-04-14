@@ -66,4 +66,4 @@ router.get("/checklists", async (req, res) => {
     res.status(200).contentType("application/json").send(checks);
 });
 
-service.start();
+service.start( (process.env.TLS_ENABLED || "TRUE").toLowerCase() === "true");

@@ -5,5 +5,5 @@
     - name: Remove Autocert Provisioner
       kubernetes.core.helm:
         name: smallstep
-        namespace: "{{ cluster.namespace }}"
+        namespace: "{{ app.namespace }}"
         state: absent

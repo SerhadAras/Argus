@@ -8,6 +8,13 @@
       include_vars:
         file: ./config.yml
 
+- import_playbook: "./certificates/remove.yml"
+  tags:
+    - kubernetes
+    - k8s
+    - certificates
+    - ca
+
 - import_playbook: "./autoscaler/remove.yml"
   tags:
     - kubernetes

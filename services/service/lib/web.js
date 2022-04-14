@@ -45,17 +45,26 @@ module.exports = {
             res.status(404).send({status: 404, message: "This route does not exist!"});
         });
 
-        return https.createServer({
+        if(clientAuth)
+        {
+            return https.createServer({
 
-            cert: fs.readFileSync(process.env.CERT_PATH || "cert.crt"),
-            key: fs.readFileSync(process.env.KEY_PATH || "cert.key"),
+                cert: fs.readFileSync(process.env.CERT_PATH || "cert.crt"),
+                key: fs.readFileSync(process.env.KEY_PATH || "cert.key"),
 
-            ca: fs.readFileSync(process.env.CA_PATH || "ca.crt"),
-            requestCert: clientAuth,
-            rejectUnauthorized: false
+                ca: fs.readFileSync(process.env.CA_PATH || "ca.crt"),
+                requestCert: clientAuth,
+                rejectUnauthorized: false
 
-        }, app).listen(process.env.PORT || 3000, () => {
-            logger.info(`Server started on port ${process.env.PORT || 3000}.`);
-        });
+            }, app).listen(process.env.PORT || 3000, () => {
+                logger.info(`Server started on port ${process.env.PORT || 3000}.`);
+            });
+        }
+        else
+        {
+            return app.listen(process.env.PORT || 3000, () => {
+                logger.info(`Server started on port ${process.env.PORT || 3000}.`);
+            });
+        }
     }
 };
