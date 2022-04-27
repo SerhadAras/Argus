@@ -22,14 +22,6 @@ router.get("/job/:id", async (req, res) => {
     res.status(200).contentType("application/json").send(job);
 });
 
-router.post("/jobs", async (req, res) => {
-
-    const queueId = req.body.resource.metadata.labels.checklist;
-    const len = await redis.length("jobs:" + queueId);
-
-    res.status(200).contentType("application/json").send(len.toString());
-});
-
 // Post results
 router.post("/results", async (req, res) => {
 

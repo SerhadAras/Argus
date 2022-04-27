@@ -1,0 +1,31 @@
+{
+  "name": "metrics",
+  "version": "1.0.0",
+  "description": "A service that gets the metrics for a resource",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/WatcherWhale/SecProA.git"
+  },
+  "contributors": [
+    {
+      "name": "Mathias Maes"
+    },
+    {
+      "name": "Cato van Hooijdonk"
+    },
+    {
+      "name": "Arash Nouri"
+    },
+    {
+      "name": "Dimitriy Vassilchenko"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/WatcherWhale/SecProA/issues"
+  },
+  "homepage": "https://github.com/WatcherWhale/SecProA#readme",
+  "dependencies": {
+    "service": "file:../service"
+  }
+}
