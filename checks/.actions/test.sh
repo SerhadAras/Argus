@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIRS="$(find . -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
+DIRS="$(find . -maxdepth 1 -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
 FAILED=0
 
 if [ -z "$2" ];

@@ -2,7 +2,7 @@
 
 set -e
 
-DIRS="$(find . -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
+DIRS="$(find . -maxdepth 1 -type d -not -path ./.actions | tail -n +2 | sed -e "s/\.\///g")"
 
 if [ "$1" ];
 then
