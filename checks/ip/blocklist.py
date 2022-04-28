@@ -43,7 +43,8 @@ def main(domain: str):
                 "name": "Blocklists",
                 "score": 0,
                 "message": f"{ip} is found on a blocklist.",
-                "value": blockedIps[ip]
+                "value": blockedIps[ip],
+                "description": "blacklist"
             })
 
 
@@ -52,7 +53,8 @@ def main(domain: str):
             "name": "Blocklists",
             "score": 10,
             "message": f"{ip} is not found on a blocklist.",
-            "value": ip
+            "value": ip,
+            "description": "blacklist"
         })
 
     print(json.dumps(results))

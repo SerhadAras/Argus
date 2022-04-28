@@ -27,11 +27,11 @@ def spfTest(domain):
         for dns_data in test_spf:
 
             if 'spf1' in str(dns_data):
-                result = {"name": "Mail: SPF", "score": 10, "message": "SPF record found."}
+                result = {"name": "Mail: SPF", "score": 10, "message": "SPF record found.", "description": "SPF"}
                 return result
 
     except:
-        result = {"name": "Mail: SPF", "score": 0, "message": "No SPF record found."}
+        result = {"name": "Mail: SPF", "score": 0, "message": "No SPF record found.", "description": "SPF"}
         return result
 
 if __name__ == "__main__":

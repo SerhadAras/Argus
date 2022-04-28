@@ -98,7 +98,8 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
             results.append({
                 "name": headerKey,
                 "score": 0,
-                "message": f"{headerKey} should be present."
+                "message": f"{headerKey} should be present.",
+                "description": "headers"
             })
         elif headerKey in headers:
 
@@ -108,7 +109,8 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     results.append({
                         "name": headerKey,
                         "score": value['score'],
-                        "value": headers[headerKey]
+                        "value": headers[headerKey],
+                        "description": "headers"
                     })
                     valueTest = True
                     break
@@ -118,30 +120,35 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     "name": headerKey,
                     "score": 0,
                     "message": f"{headerKey} shoud be absent.",
-                    "value": headers[headerKey]
+                    "value": headers[headerKey],
+                    "description": "headers"
                 })
             elif not valueTest and pattern['present'] is None:
                 results.append({
                     "name": headerKey,
                     "score": 10,
-                    "value": headers[headerKey]
+                    "value": headers[headerKey],
+                    "description": "headers"
                 })
             elif not valueTest:
                 results.append({
                     "name": headerKey,
                     "score": 0,
-                    "value": headers[headerKey]
+                    "value": headers[headerKey],
+                    "description": "headers"
                 })
 
         elif headerKey not in headers and pattern["present"] is False:
             results.append({
                 "name": headerKey,
                 "score": 10,
+                "description": "headers"
             })
         elif pattern['present'] is None:
             results.append({
                 "name": headerKey,
-                "score": 10
+                "score": 10,
+                "description": "headers"
             })
 
     return results

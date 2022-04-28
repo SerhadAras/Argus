@@ -17,13 +17,15 @@ def main(hostname: str, port: str = '443') -> int:
         results.append({
             "name": "valid",
             "score": 10,
-            "message": "This website uses a valid certificate."
+            "message": "This website uses a valid certificate.",
+            "description": "certificate"
         })
     except requests.exceptions.SSLError:
         results.append({
             "name": "valid",
             "score": 0,
-            "message": "This website uses an invalid certificate."
+            "message": "This website uses an invalid certificate.",
+            "description": "certificate"
         })
     except:
         print("{}")
@@ -46,14 +48,16 @@ def main(hostname: str, port: str = '443') -> int:
                     results.append({
                         "name": "expiration",
                         "score": 10,
-                        "message": "Certificate is not expired."
+                        "message": "Certificate is not expired.",
+                        "description": "certificate"
                     })
 
                 else:
                     results.append({
                         "name": "expiration",
                         "score": 0,
-                        "message": f"Certificate is expired with {-1 * days}."
+                        "message": f"Certificate is expired with {-1 * days}.",
+                        "description": "certificate"
                     })
 
     finally:

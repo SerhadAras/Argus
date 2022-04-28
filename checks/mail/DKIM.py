@@ -43,9 +43,9 @@ def dkimTest(domain: str , selectorList: list) -> dict:
             pass
 
     if hasDKIM:
-        result = {"name": "Mail: DKIM", "score": 10, "message": "DKIM record found."}
+        result = {"name": "Mail: DKIM", "score": 10, "message": "DKIM record found.", "description": "DKIM"}
     else:
-        result = {"name": "Mail: DKIM", "score": 0, "message": "No DKIM record found.", "certain": False}
+        result = {"name": "Mail: DKIM", "score": 0, "message": "No DKIM record found.", "certain": False, "description": "DKIM"}
 
     return result
 

@@ -23,19 +23,22 @@ def main(domain: str):
         print(json.dumps({
             "name": "supported protocols",
             "score": 0,
-            "message": "TLSv1.0 is supported, capped at 0/10."
+            "message": "TLSv1.0 is supported, capped at 0/10.",
+            "description": "supported-protocol"
         }))
     elif "1.1" in acceptedVersions:
         print(json.dumps({
             "name": "supported protocols",
             "score": 7,
-            "message": "TLSv1.1 is supported, capped at 7/10."
+            "message": "TLSv1.1 is supported, capped at 7/10.",
+            "description": "supported-protocol"
         }))
     else:
         print(json.dumps({
             "name": "supported protocols",
             "score": 10,
-            "message": "Only TLSv1.3 and/or TLSv1.2 are supported."
+            "message": "Only TLSv1.3 and/or TLSv1.2 are supported.",
+            "description": "supported-protocol"
         }))
 
 if __name__ == "__main__":

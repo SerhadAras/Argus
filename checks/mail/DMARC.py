@@ -28,11 +28,11 @@ def dmarcTest(domain: str) -> dict:
         for dns_data in test_dmarc:
 
             if 'DMARC1' in str(dns_data):
-                result = {"name": "Mail: DMARC", "score": 10, "message": "DMARK record found."}
+                result = {"name": "Mail: DMARC", "score": 10, "message": "DMARK record found.", "description": "DMARC"}
                 return result
 
     except:
-        result = {"name": "Mail: DMARC", "score": 0, "message": "No DMARC record found."}
+        result = {"name": "Mail: DMARC", "score": 0, "message": "No DMARC record found.", "description": "DMARC"}
         return result
 
 if __name__ == "__main__":
