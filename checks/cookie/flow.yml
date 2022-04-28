@@ -1,0 +1,12 @@
+---
+name: cookie
+tags:
+  - cookies
+  - passive
+  - web
+type:
+  - domain
+stages:
+  - name: Cookie Checks
+    checks:
+      - third_party.py
