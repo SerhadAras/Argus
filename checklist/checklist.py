@@ -26,7 +26,6 @@ def main():
     while running:
         try:
             logger.info("requesting job")
-            time.sleep(2)
             CURRENT_JOB = jobs.requestJob(flow.getName())
 
             if CURRENT_JOB is None:
