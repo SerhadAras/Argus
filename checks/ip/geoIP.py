@@ -21,7 +21,8 @@ def main(domain):
             ips.append(ipval.to_text())
     except:
         print("No IP address found for this domain.", file=sys.stderr)
-        sys.exit()
+        print('{}')
+        exit()
 
     with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
         for ip in ips:
