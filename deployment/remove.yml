@@ -7,49 +7,28 @@
     - name: "Load Config on localhost"
       include_vars:
         file: ./config.yml
+        name: config
 
-- import_playbook: "./certificates/remove.yml"
+
+- import_playbook: "./argus/remove.yml"
   tags:
-    - kubernetes
-    - k8s
-    - certificates
-    - ca
+    - argus
 
 - import_playbook: "./autoscaler/remove.yml"
   tags:
-    - kubernetes
-    - k8s
     - autoscaler
 
-- import_playbook: "./redis/remove.yml"
+- import_playbook: "./argus/remove.yml"
   tags:
-    - kubernetes
-    - k8s
-    - redis
-
-- import_playbook: "./services/remove.yml"
-  tags:
-    - kubernetes
-    - k8s
-    - sequencer
-
-- import_playbook: "./checklists/remove.yml"
-  tags:
-    - kubernetes
-    - k8s
-    - checklists
+    - argus
 
 - import_playbook: "./fluentd/remove.yml"
   tags:
-    - kubernetes
-    - k8s
     - fluentd
     - logging
     - log
-  when: fluentd.enabled == true
+  when: config.fluentd.enabled == true
 
 - import_playbook: "./kubernetes/remove.yml"
   tags:
-    - kubernetes
-    - k8s
     - setup

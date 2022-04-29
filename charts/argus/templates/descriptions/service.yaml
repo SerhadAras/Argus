@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "descriptions"
+  labels:
+    {{- include "argus.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: "descriptions"
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

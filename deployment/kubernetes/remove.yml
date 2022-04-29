@@ -1,20 +1,9 @@
 ---
-- name: "Remove Kubernetes Deployments"
+- name: Remove Kubernetes Resources
   hosts: localhost
   tasks:
-    - name: "Remove Ingress"
-      tags:
-        - ingress
-      kubernetes.core.k8s:
-        state: absent
-        kind: Ingress
-        name: "{{ app.name }}-ingress"
-        namespace: "{{ app.namespace }}"
-
-    - name: "Remove Namespace"
-      tags:
-        - setup
+    - name: "Remove namespace"
       kubernetes.core.k8s:
         state: absent
         kind: Namespace
-        name: "{{ app.namespace }}"
+        name: "{{ config.app.namespace }}"

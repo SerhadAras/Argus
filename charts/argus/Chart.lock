@@ -1,0 +1,9 @@
+dependencies:
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.8.5
+- name: autocert
+  repository: https://smallstep.github.io/helm-charts/
+  version: 1.16.3
+digest: sha256:1c24c5d60712ce46b46e9e45bb4ebd4f192180169b828f27c92be02f9c092cd9
+generated: "2022-04-14T22:26:36.909123095+02:00"

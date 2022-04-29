@@ -11,5 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Check Codestyle
+      - name: Lint Yaml Files
         uses: frenck/action-yamllint@v1
+
+      - name: Lint Helm Charts
+        run: helm lint --strict *
+        working-directory: charts

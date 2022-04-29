@@ -1,9 +1,0 @@
----
-- name: "Remove Autocert Provisioner"
-  hosts: localhost
-  tasks:
-    - name: Remove Autocert Provisioner
-      kubernetes.core.helm:
-        name: smallstep
-        namespace: "{{ app.namespace }}"
-        state: absent

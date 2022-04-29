@@ -1,0 +1,9 @@
+---
+- name: "Remove Argus"
+  hosts: localhost
+  tasks:
+    - name: "Remove Helm Chart"
+      kubernetes.core.helm:
+        state: absent
+        name: "{{ config.app.name }}"
+        namespace: "{{ config.app.namespace }}"

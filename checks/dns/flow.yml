@@ -1,5 +1,6 @@
 ---
 name: dns
+version: 0.2.0
 tags:
   - dns
   - passive

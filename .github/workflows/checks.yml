@@ -1,11 +1,26 @@
 ---
-name: Checklist
+name: Build Checklists
 on:
   pull_request:
     branches:
       - master
+  push:
+    branches:
+      - master
 
 jobs:
+  security:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Safety
+        run: pip3 install safety
+
+      - name: Check dependencies for vulnerabilities
+        run: ./.actions/security.sh
+        working-directory: checks
+
   build:
     runs-on: self-hosted
     steps:

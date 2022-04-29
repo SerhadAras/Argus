@@ -1,0 +1,16 @@
+{{- if .Values.autoscaling }}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gateway-autoscaler
+  labels:
+    {{- include "argus.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: "gateway"
+  minReplicas: {{ .Values.gateway.replicas.min }}
+  maxReplicas: {{ .Values.gateway.replicas.max }}
+  targetCPUUtilizationPercentage: 90
+{{- end}}

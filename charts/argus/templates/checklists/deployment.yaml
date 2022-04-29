@@ -1,0 +1,57 @@
+---
+{{- range $.Values.checklists }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .name }}-checklist"
+  labels:
+    app: checklist
+    throughput: "{{ .throughput }}"
+    checklist: "{{ .name }}"
+    {{- include "argus.labels" $ | nindent 4 }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+spec:
+  replicas: {{ .replicas.min }}
+  selector:
+    matchLabels:
+      app: checklist
+      checklist: "{{ .name }}"
+  template:
+    metadata:
+      labels:
+        app: checklist
+        checklist: "{{ .name }}"
+      annotations:
+        {{- set .podAnnotations "autocert.step.sm/name" ( printf "%s-checklist" .name) | toYaml | nindent 8 }}
+    spec:
+      tolerations:
+        {{- toYaml .tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .affinity | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .nodeSelector | nindent 8 }}
+      imagePullSecrets:
+        {{- toYaml $.Values.image.imagePullSecrets | nindent 8 }}
+      containers:
+        - name: "{{ .name }}-checklist"
+          image: "{{ $.Values.image.registry }}/checklist:{{ .name }}-{{ .tag }}"
+          imagePullPolicy: "{{ $.Values.image.pullPolicy }}"
+          env:
+            {{- if $.Values.security.cluster.tls }}
+            - name: SEQUENCER_URL
+              value: "https://sequencer-server:3000"
+
+            # Certificates
+            - name: CERT_PATH
+              value: "/var/run/autocert.step.sm/site.crt"
+            - name: KEY_PATH
+              value: "/var/run/autocert.step.sm/site.key"
+            - name: CA_PATH
+              value: "/var/run/autocert.step.sm/root.crt"
+            {{- else }}
+            - name: SEQUENCER_URL
+              value: "http://sequencer-server:3000"
+            {{- end }}
+{{- end }}

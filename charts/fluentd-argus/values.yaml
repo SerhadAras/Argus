@@ -1,0 +1,10 @@
+image: fluent/fluentd-kubernetes-daemonset
+tag: v1-debian-elasticsearch
+
+env: []
+
+config: |
+  # Fluentd custom config
+  #
+  # Fill in your own custom config here
+  # @include statements will not work in this file

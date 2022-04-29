@@ -12,6 +12,7 @@ fi
 for DIR in $DIRS
 do
     echo "#############################################"
+    VERSION="$(grep "version:.*" "$DIR/flow.yml" | sed -e "s/version:\ *//g")"
 
     if [ "$REGISTRY" ];
     then
@@ -19,6 +20,9 @@ do
         docker tag $REGISTRY/checklist:$DIR-latest ghcr.io/watcherwhale/checklist:$DIR-latest
     fi
 
+    docker tag ghcr.io/watcherwhale/checklist:$DIR-latest ghcr.io/watcherwhale/checklist:$DIR-v$VERSION
+
     echo "Pushing $DIR"
     docker push ghcr.io/watcherwhale/checklist:$DIR-latest
+    docker push ghcr.io/watcherwhale/checklist:$DIR-v$VERSION
 done

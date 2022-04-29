@@ -1,0 +1,11 @@
+---
+- name: "Deploy Argus"
+  hosts: localhost
+  tasks:
+    - name: "Install Helm Chart"
+      kubernetes.core.helm:
+        name: "{{ config.app.name }}"
+        namespace: "{{ config.app.namespace }}"
+        create_namespace: false
+        chart_ref: ../../charts/argus
+        values: "{{ config }}"

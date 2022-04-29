@@ -1,5 +1,6 @@
 ---
 name: mail
+version: 0.2.0
 tags:
   - mail
   - passive

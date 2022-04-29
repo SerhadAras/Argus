@@ -1,0 +1,19 @@
+apiVersion: v2
+
+name: argus
+description: An automated security checking platform that is highly extensible.
+
+type: application
+
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 16.8.5
+
+  - name: autocert
+    repository: https://smallstep.github.io/helm-charts/
+    version: 1.16.3
+    condition: security.cluster.tls

@@ -1,0 +1,201 @@
+---
+app:
+  name: argus
+  host: argus.local
+
+security:
+  cluster:
+    tls: false
+
+  ingress:
+    clientAuth: true
+    caSecret: "argus-ca"
+    tlsSecret: "argus-tls"
+
+image:
+  registry: "ghcr.io/watcherwhale"
+
+  imagePullSecrets:
+    - name: ghcr-io
+
+  pullPolicy: Always
+
+gateway:
+  loglevel: info
+
+  annotations: {}
+  podAnnotations:
+    autocert.step.sm/name: gateway-server
+
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  securityContext: {}
+
+  replicas:
+    min: 1
+    max: 10
+
+  tag: v0.1.0
+
+sequencer:
+  loglevel: info
+
+  replicas:
+    min: 1
+    max: 10
+
+  annotations: {}
+  podAnnotations: {}
+
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  securityContext: {}
+
+  tag: v0.1.0
+
+descriptions:
+  replicas:
+    min: 1
+    max: 10
+
+  annotations: {}
+  podAnnotations: {}
+
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  securityContext: {}
+
+  tag: v0.1.0
+
+certmaster:
+  loglevel: info
+
+  replicas:
+    min: 1
+    max: 3
+
+  annotations: {}
+  podAnnotations: {}
+
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  securityContext: {}
+
+  tag: v0.1.0
+
+checklists:
+  - name: dns
+    tag: v0.2.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+    throughput: 100
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 5
+
+  - name: headers
+    tag: v0.2.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+    throughput: 50
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 5
+
+  - name: https
+    tag: v0.2.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+
+    throughput: 20
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 5
+
+  - name: ip
+    tag: v0.2.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+    throughput: 1
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 10
+
+  - name: mail
+    tag: v0.2.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+    throughput: 20
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 10
+
+autoscaling:
+  enabled: true
+  tag: latest
+
+redis:
+  master:
+    persistence:
+      enabled: false
+
+  replica:
+    replicaCount: 3
+
+    persistence:
+      enabled: false
+
+  sentinel:
+    enabled: true
+
+  auth:
+    enabled: true
+    sentinel: true

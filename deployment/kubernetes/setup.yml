@@ -9,6 +9,6 @@
           kind: Namespace
           apiVersion: v1
           metadata:
-            name: "{{ app.namespace }}"
+            name: "{{ config.app.namespace }}"
             labels:
               autocert.step.sm: enabled

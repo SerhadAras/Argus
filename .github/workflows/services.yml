@@ -1,11 +1,23 @@
 ---
-name: Services
+name: Build Services
 on:
   pull_request:
     branches:
       - master
+  push:
+    branches:
+      - master
 
 jobs:
+  security:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check dependencies for vulnerabilities
+        run: ./.actions/security.sh
+        working-directory: services
+
   build:
     runs-on: self-hosted
     steps:
@@ -14,3 +26,7 @@ jobs:
       - name: Build service images
         run: ./.actions/build.sh ${GITHUB_SHA}
         working-directory: services
+
+      - name: Build descriptions service image
+        run: docker build -t ${GITHUB_SHA}/descriptions:latest .
+        working-directory: descriptions

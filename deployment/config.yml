@@ -9,37 +9,37 @@ app:
   # The kubernetes namespace to deploy to
   namespace: argus
 
-  security:
-    cluster:
-      # Enable/Disable TLS Encryption and
-      #  Client Authorization in the cluster.
-      #
-      #  If the kubernetes environment does not provide
-      #  encrypted node to node connections, enable this.
-      #
-      #  Default: false
-      tls: false
+security:
+  cluster:
+    # Enable/Disable TLS Encryption and
+    #  Client Authorization in the cluster.
+    #
+    #  If the kubernetes environment does not provide
+    #  encrypted node to node connections, enable this.
+    #
+    #  Default: false
+    tls: false
 
-    ingress:
-      # Enable/Disable Client Authorization
-      #  at the ingress.
-      #
-      #  Use mTLS to authorize clients at the ingress,
-      #  but not further.
-      #
-      #  Default: true
-      clientAuth: true
+  ingress:
+    # Enable/Disable Client Authorization
+    #  at the ingress.
+    #
+    #  Use mTLS to authorize clients at the ingress,
+    #  but not further.
+    #
+    #  Default: true
+    clientAuth: true
 
-      # Can be left empty when:
-      #  app.security.cluster.tls is enabled
-      #  or
-      #  clientAuth is disabled
-      caSecret: ""
+    # Can be left empty when:
+    #  app.security.cluster.tls is enabled
+    #  or
+    #  clientAuth is disabled
+    caSecret: "argus-ca"
 
-      # The tls secret for the ingress
-      tlsSecret: "argus-tls"
+    # The tls secret for the ingress
+    tlsSecret: "argus-tls"
 
-docker:
+image:
   # Registry / account to push the images to
   #  <registry>/<image name>:<tag>
   registry: "ghcr.io/watcherwhale"
@@ -53,21 +53,6 @@ docker:
   # - IfNotPresent
   pullPolicy: Always
 
-redis:
-  # Docker tag of the redis pods
-  tag: 6-alpine
-
-  # Amount of redis database replicas
-  # Must be at least 3
-  #
-  # Default: 3
-  replicas: 3
-
-  # Persist redis database to disk
-  #
-  # Default: fase
-  persistence: false
-
 gateway:
   # The log level of this service
   #   - error
@@ -77,11 +62,11 @@ gateway:
   #   - verbose
   #   - debug
   #   - silly
-  loglevel: http
+  loglevel: info
 
   # Amount of gateway minimum and maximum replicas.
   replicas:
-    min: 1
+    min: 3
     max: 10
 
   # The docker tag to pull
@@ -96,18 +81,18 @@ sequencer:
   #   - verbose
   #   - debug
   #   - silly
-  loglevel: http
+  loglevel: info
 
   # Amount of sequencer minimum and maximum replicas.
   replicas:
-    min: 1
+    min: 3
     max: 10
 
   # The docker tag to pull
   tag: latest
 
 certmaster:
-  loglevel: http
+  loglevel: info
 
   replicas:
     min: 1
@@ -256,21 +241,11 @@ fluentd:
     enabled: false
 
 # Autoscaling based on throughput
-autoscaler:
+autoscaling:
   enabled: true
 
   # https://github.com/jthomperoo/custom-pod-autoscaler-operator/releases
   version: v1.2.0
 
-build:
-  # Build all images before deploying
-  enabled: false
-
-  # The tags for building
-  #  <registry>/<image name>:<tag>
-  tags:
-    - latest
-    - dev
-
-  # Push to registry
-  push: yes
+  # checklist-scaler tag
+  tag: latest

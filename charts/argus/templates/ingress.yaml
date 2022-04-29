@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.app.name }}-ingress"
+  labels:
+    {{- include "argus.labels" . | nindent 4 }}
+  annotations:
+    {{- if and .Values.security.ingress.clientAuth .Values.security.ingress.caSecret }}
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+    nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+    {{- else }}
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "off"
+    {{- end }}
+
+    {{- if .Values.security.cluster.tls }}
+    nginx.ingress.kubernetes.io/auth-tls-secret: "{{ .Release.Namespace }}/autocert-ca-certificate"
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    {{- else if and .Values.security.ingress.clientAuth .Values.security.ingress.caSecret }}
+    nginx.ingress.kubernetes.io/auth-tls-secret: "{{ .Values.security.ingress.caSecret }}"
+    {{- end }}
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: gateway-server
+      port:
+        number: 3000
+  {{- if .Values.tlsSecret }}
+  tls:
+    - hosts:
+        - "{{ .Values.app.host }}"
+      secretName: "{{ .Values.security.ingress.tlsSecret }}"
+  {{- end}}
+  rules:
+    - host: "{{ .Values.app.host }}"
+      http:
+        paths:
+          - path: /descriptions
+            pathType: Prefix
+            backend:
+              service:
+                name: descriptions
+                port:
+                  number: 80
+      {{- if .Values.security.cluster.tls }}
+          - path: /api/v1/certificate
+            pathType: Prefix
+            backend:
+              service:
+                name: cert-master-server
+                port:
+                  number: 3000
+      {{- end }}
