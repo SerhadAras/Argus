@@ -5,14 +5,18 @@ import requests
 import sys
 
 import urllib3
+import requests
 
+headers = {
+    'User-Agent': 'argus'
+}
 DOMAIN = sys.argv[1]
 url = 'http://' + DOMAIN
 HTTPS = "https"
 urllib3.disable_warnings()
 
 try:
-    res = requests.get(url, verify=False)
+    res = requests.get(url, verify=False,headers=headers)
 except:
     print({})
 else:

@@ -5,6 +5,7 @@ import json
 import dns.resolver
 import geoip2.database
 
+
 def main(domain):
     """Check if a domain is hosted in the EU.
 

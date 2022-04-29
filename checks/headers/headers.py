@@ -46,7 +46,6 @@ def getHeaders(url: str):
         conn = http.client.HTTPSConnection(hostname, context = ctx)
     else:
         conn = http.client.HTTPConnection(hostname)
-
     try:
         conn.request("HEAD", path)
         res = conn.getresponse()
