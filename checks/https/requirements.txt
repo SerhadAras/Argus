@@ -1,4 +1,4 @@
-requests
-datetime
-urllib3
-pyopenssl
+requests==2.27.1
+datetime==4.4
+urllib3==1.26.8
+pyopenssl==22.0.0
