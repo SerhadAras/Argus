@@ -1,6 +1,6 @@
 {
   "name": "metrics",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "A service that gets the metrics for a resource",
   "main": "src/index.js",
   "repository": {

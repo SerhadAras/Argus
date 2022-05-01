@@ -13,6 +13,8 @@ class Redis
      */
     constructor(host, port=26379, sentinel = true, password = "")
     {
+        this.ready = false;
+
         let options = {
             host: host,
             port: port
@@ -39,6 +41,18 @@ class Redis
 
         this.client = new IoRedis(options);
         this.redLock = new RedLock([this.client]);
+
+        this.client.on("ready", () => {
+            this.ready = true;
+        });
+
+        this.client.on("end", () => {
+            this.ready = false;
+        });
+
+        this.client.on("error", () => {
+            this.ready = false;
+        });
     }
 
     /**
@@ -57,6 +71,15 @@ class Redis
     quit()
     {
         return this.client.quit();
+    }
+
+    /**
+     * @returns {boolean}
+     * Checks if the connection is healthy.
+     */
+    isReady()
+    {
+        return this.ready;
     }
 
     /**

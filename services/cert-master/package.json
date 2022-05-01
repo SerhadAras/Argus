@@ -1,6 +1,6 @@
 {
   "name": "cert-master",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "A service that renews and revokes certificates.",
   "main": "src/index.js",
   "repository": {

@@ -42,6 +42,15 @@ module.exports = (serviceName, path, options = { redis: { enabled : true, sentin
     process.on("SIGINT", shutdown)
         .on("SIGTERM", shutdown);
 
+    app.router.get("/health", (req, res) => {
+        if(options.redis.enabled && !redis.isReady())
+        {
+            res.status(500).send("Not connected to the queue.");
+        }
+
+        res.status(200).send("OK");
+    });
+
     // Return essential service objects
     return {
         logger: logger,
