@@ -43,6 +43,10 @@ jobs:
         run: ./.actions/build.sh ${GITHUB_SHA}
         working-directory: checks
 
+      - name: Build autoscaler image
+        run: ./.actions/build.sh ${GITHUB_SHA}
+        working-directory: autoscaler
+
   test:
     runs-on: self-hosted
     needs: build

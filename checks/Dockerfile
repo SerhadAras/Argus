@@ -1,6 +1,9 @@
 ARG registry
 FROM $registry/checklist:template
 
+# Labels
+LABEL org.opencontainers.image.source https://github.com/WatcherWhale/SecProA
+
 ARG checklist
 
 WORKDIR /app/checks

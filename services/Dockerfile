@@ -1,5 +1,8 @@
 from node:16-alpine
 
+# Labels
+LABEL org.opencontainers.image.source https://github.com/WatcherWhale/SecProA
+
 # Run as node user
 USER node
 

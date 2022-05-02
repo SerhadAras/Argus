@@ -17,7 +17,4 @@ metric:
     headers:
       Content-Type: "application/json"
     parameterMode: body
-    caCert: "/var/run/autocert.step.sm/root.crt"
-    clientCert: "/var/run/autocert.step.sm/site.crt"
-    clientKey: "/var/run/autocert.step.sm/site.key"
 runMode: "per-resource"

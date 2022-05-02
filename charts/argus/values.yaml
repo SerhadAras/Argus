@@ -91,6 +91,24 @@ certmaster:
 
   tag: v0.1.0
 
+metrics:
+  loglevel: info
+
+  annotations: {}
+  podAnnotations: {}
+
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  securityContext: {}
+
+  replicas:
+    min: 1
+    max: 10
+
+  tag: v0.1.0
+
 checklists:
   - name: dns
     tag: v0.2.0

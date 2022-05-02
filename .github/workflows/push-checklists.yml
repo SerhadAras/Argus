@@ -20,3 +20,7 @@ jobs:
       - name: Push checklists to GitHub
         run: ./.actions/push.sh ${GITHUB_SHA}
         working-directory: checks
+
+      - name: Push autoscaler to GitHub
+        run: ./.actions/push.sh ${GITHUB_SHA}
+        working-directory: autoscaler
