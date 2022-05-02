@@ -1,0 +1,17 @@
+---
+{{- if .Values.selenium.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium
+  labels:
+    {{- include "argus.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: selenium
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4444
+      targetPort: 4444
+{{- end }}

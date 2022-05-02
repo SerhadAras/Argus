@@ -53,7 +53,9 @@ class Flow:
         stages = len(self.flow['stages'])
 
         results = []
-        env = {}
+
+        # Add environment of parent
+        env = dict(os.environ)
 
         self.logger.info(f"Starting flow with {stages} stages.", self.getName())
 

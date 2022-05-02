@@ -1,0 +1,36 @@
+---
+{{- if .Values.selenium.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "selenium"
+  labels:
+    {{- include "argus.labels" . | nindent 4 }}
+    app: selenium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: selenium
+  template:
+    metadata:
+      labels:
+        app: selenium
+    spec:
+      tolerations:
+        {{- toYaml .Values.selenium.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.selenium.affinity | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.selenium.nodeSelector | nindent 8 }}
+      imagePullSecrets:
+        {{- toYaml .Values.image.imagePullSecrets | nindent 8 }}
+      securityContext:
+        {{- toYaml .Values.selenium.securityContext | nindent 8 }}
+      containers:
+        - name: "selenium-chrome"
+          image: "selenium/standalone-chrome:{{ .Values.selenium.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          ports:
+            - containerPort: 4444
+{{- end }}

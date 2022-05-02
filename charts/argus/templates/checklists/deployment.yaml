@@ -54,4 +54,9 @@ spec:
             - name: SEQUENCER_URL
               value: "http://sequencer-server:3000"
             {{- end }}
+
+            {{- range $k, $v := .env }}
+            - name: {{ $k }}
+              value: {{ $v }}
+            {{- end }}
 {{- end }}
