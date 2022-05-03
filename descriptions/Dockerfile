@@ -11,7 +11,7 @@ RUN ./build.sh
 
 FROM nginx:1.21-alpine
 
-COPY --from=build /build/descriptions /var/www/static/descriptions
+COPY --from=build --chown=nginx /build/descriptions /var/www/static/descriptions
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
