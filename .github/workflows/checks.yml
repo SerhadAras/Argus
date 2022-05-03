@@ -37,7 +37,8 @@ jobs:
           MAXMIND: https://github.com/DocSpring/geolite2-city-mirror/raw/master/GeoLite2-City.tar.gz
 
       - name: Build base image
-        run: docker build -t ${GITHUB_SHA}/checklist:template ./checklist
+        run: docker build -t ${GITHUB_SHA}/checklist:template .
+        working-directory: checklist
 
       - name: Build checklist images
         run: ./.actions/build.sh ${GITHUB_SHA}

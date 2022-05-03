@@ -46,6 +46,7 @@ module.exports = (serviceName, path, options = { redis: { enabled : true, sentin
         if(options.redis.enabled && !redis.isReady())
         {
             res.status(500).send("Not connected to the queue.");
+            return;
         }
 
         res.status(200).send("OK");

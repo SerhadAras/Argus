@@ -9,7 +9,7 @@ CERT = os.environ.get("CERT_PATH")
 KEY = os.environ.get("KEY_PATH")
 CA = os.environ.get("CA_PATH")
 
-def requestJob(name: str, flowTags) -> dict | None:
+def requestJob(name: str) -> dict | None:
     """Request a job from a sequencer server.
 
     Args:

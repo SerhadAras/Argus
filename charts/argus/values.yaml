@@ -216,7 +216,7 @@ checklists:
     tolerations: []
 
     env:
-      SELENIUM_URL: "http://selenium:4444/wd/hub"
+      SELENIUM_URL: "http://selenium-hub:4444"
 
     throughput: 1
     interval: 10000
@@ -232,6 +232,8 @@ autoscaling:
 selenium:
   enabled: true
   tag: latest
+
+  replicas: 3
 
   nodeSelector: {}
   affinity: {}

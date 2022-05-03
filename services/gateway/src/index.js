@@ -29,7 +29,7 @@ router.post("/request", async (req, res) => {
     if("checklists" in request)
     {
         const checkl = availableChecklists.filter( x => {
-            return request.checklists.include(x.name);
+            return request.checklists.includes(x.name);
         });
         checkl.forEach(x => checklists.add(x.name));
     }
