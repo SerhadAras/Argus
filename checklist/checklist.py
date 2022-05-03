@@ -1,7 +1,9 @@
-import sys
 import os
+import sys
 import time
 import signal
+import threading
+
 from modules.flow import Flow
 from modules import jobs
 from modules.logger import getLogger
@@ -11,6 +13,18 @@ CURRENT_JOB = None
 
 flow = None
 running = True
+
+def advert():
+    """
+    Advert thread
+    """
+    global flow
+
+    while running:
+        try:
+            jobs.advertise(flow.getFlowAdvertisment())
+        finally:
+            time.sleep(5)
 
 def main():
     """
@@ -22,6 +36,8 @@ def main():
     logger.info("starting service")
     flow = Flow(logger)
     logger.info(f"loaded flow {flow.getName}", flow.getName())
+
+    threading.Thread(target=advert).start()
 
     while running:
         try:

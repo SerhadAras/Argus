@@ -10,12 +10,11 @@ router.get("/job/:id", async (req, res) => {
     const queueId = req.params.id;
     logger.debug(`Finding jobs in ${queueId} queue.`);
 
-    await redis.sortedSet("checklists", queueId);
     const job = await redis.pop("jobs:" + queueId);
 
     if(!job || job === "")
     {
-        res.status(404).send({status: 404, message: "No jobs are ready for execution"});
+        res.status(404).send({status: 404, message: "No jobs are ready for execution."});
         return;
     }
 
@@ -36,8 +35,14 @@ router.post("/pushback", async (req, res) => {
 
     await redis.insertFront("jobs:" + req.body.id, req.body.domain);
 
-    res.status(201).send({status: 201, message: "Job succesfully inserted"});
+    res.status(201).send({status: 201, message: "Job succesfully inserted."});
+});
 
+router.post("/advertise", async (req, res) => {
+
+    await redis.sortedSet("checklists", req.body);
+
+    res.status(201).send({status: 201, message: "Checklist advertised."});
 });
 
 service.start( (process.env.TLS_ENABLED || "TRUE").toLowerCase() === "true");

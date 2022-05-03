@@ -164,7 +164,7 @@ class Redis
      */
     sortedSet(key, value)
     {
-        return this.client.zadd(key, Date.now() +  600 * 1000, value);
+        return this.client.zadd(key, Date.now() +  600 * 1000, JSON.stringify(value));
     }
 
     /**

@@ -9,11 +9,12 @@ CERT = os.environ.get("CERT_PATH")
 KEY = os.environ.get("KEY_PATH")
 CA = os.environ.get("CA_PATH")
 
-def requestJob(name: str) -> dict | None:
+def requestJob(name: str, flowTags) -> dict | None:
     """Request a job from a sequencer server.
 
     Args:
         name (str): The checklist name.
+        flowTags : the tags of the current flow
 
     Returns:
         dict: The job request or None when no jobs are available.
@@ -52,3 +53,14 @@ def pushBack(check: dict):
         res = requests.post(URL + "pushback", json=check, cert=(CERT, KEY), verify=CA)
     else:
         res = requests.post(URL + "pushback", json=check)
+
+def advertise(advert: dict):
+    """"
+    push advertisements in redis queue
+    """
+    if TLS:
+        res = requests.post(URL + "advertise", json=advert, cert=(CERT, KEY), verify=CA)
+    else:
+        res = requests.post(URL + "advertise", json=advert)
+
+    return res.status_code == 201

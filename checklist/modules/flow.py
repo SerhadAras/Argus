@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import copy
 
 import yaml
 import json
@@ -26,6 +27,15 @@ class Flow:
         self.logger.info("loading flow file")
         with open("flow.yml", "r", encoding="utf-8") as stream:
             self.flow = yaml.safe_load(stream)
+
+    def getFlowAdvertisment(self):
+        """"
+        Method to get the tags of current flow
+        """
+        advert = copy.deepcopy(self.flow)
+        del advert["stages"]
+
+        return advert
 
     def getName(self) -> str:
         """Get the name of the this flow.
