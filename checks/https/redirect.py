@@ -10,8 +10,8 @@ import requests
 headers = {
     'User-Agent': 'argus'
 }
-DOMAIN = sys.argv[1]
-url = 'http://' + DOMAIN
+target = sys.argv[2]
+url = 'http://' + target
 HTTPS = "https"
 urllib3.disable_warnings()
 

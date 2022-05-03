@@ -8,15 +8,54 @@ import dns.resolver
 jobQueue = queue.Queue()
 blocked = []
 
-def main(domain: str):
+def main(target, type):
     """main.
 
     Args:
-        domain (str): The domain to check
+        target (str): The target to check.
+        type (str): The target type.
+    """
+
+    targets = []
+
+    if type == "domain":
+        targets = resolve(target)
+    elif type == "ip":
+        targets.append(target)
+    else:
+        print("{}")
+        exit()
+
+    run(targets)
+
+def resolve(domain: str):
+    """Resolve a domain to a set of ip addresses.
+    """
+    ips = []
+    try:
+        result = dns.resolver.resolve(domain)
+        for ipVal in result:
+            ips.append(ipVal.to_text())
+        return ips
+    except:
+        print("{}")
+        sys.exit(0)
+
+def run(targets: list):
+    """main.
+
+    Args:
+        targets (list): A list of target ip addresses to check.
     """
     results = []
-    ips = enqueue(domain)
     threads = []
+
+    blocklists = readBlocklists()
+
+    # Enqueue target
+    for blocklist in blocklists:
+        for ip in targets:
+            jobQueue.put((ip, blocklist))
 
     for i in range(100):
         threads.append(threading.Thread(target=checkThread, daemon=True))
@@ -31,7 +70,7 @@ def main(domain: str):
         for ip, blocklist in blocked:
 
             try:
-                ips.remove(ip)
+                targets.remove(ip)
             except ValueError:
                 pass
 
@@ -51,7 +90,7 @@ def main(domain: str):
             })
 
 
-    for ip in ips:
+    for ip in targets:
         results.append({
             "name": "Blocklists",
             "score": 10,
@@ -73,25 +112,6 @@ def readBlocklists() -> list:
         random.shuffle(blocklists)
         return blocklists
 
-def enqueue(domain: str):
-    """Enqueue all ips from a domain.
-
-    Args:
-        domain (str): The domain to get ip's from.
-    """
-    ips = []
-    blocklists = readBlocklists()
-    try:
-        result = dns.resolver.resolve(domain)
-        for ipVal in result:
-            ips.append(ipVal.to_text())
-            for blocklist in blocklists:
-                jobQueue.put((ipVal.to_text(), blocklist))
-        return ips
-    except:
-        print("{}")
-        sys.exit(0)
-
 def checkThread():
     """Checking thread
     """
@@ -109,4 +129,4 @@ def checkThread():
             jobQueue.task_done()
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[2], sys.argv[1])

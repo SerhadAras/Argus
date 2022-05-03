@@ -7,14 +7,16 @@ const { redis, router } = service;
 router.post("/request", async (req, res) => {
 
     const request = req.body;
+    const availableChecklists = await getChecklists();
 
+    // Add a tracker to the the request
     if(!("tracker" in request))
     {
         request.tracker = uuid();
     }
 
+    // Build checklists set
     const checklists = new Set();
-    const availableChecklists = await getChecklists();
 
     if("tags" in request)
     {
@@ -26,6 +28,7 @@ router.post("/request", async (req, res) => {
             checkl.forEach(x => checklists.add(x.name));
         }
     }
+
     if("checklists" in request)
     {
         const checkl = availableChecklists.filter( x => {
@@ -34,23 +37,67 @@ router.post("/request", async (req, res) => {
         checkl.forEach(x => checklists.add(x.name));
     }
 
+    // Build target set
+    const targets = new Set();
+    const availableTypes = availableChecklists.flatMap(x => x.types);
+
+    for(const type of availableTypes)
+    {
+        if(type in request.targets)
+        {
+            request.targets[type].forEach(x => {
+                targets.add({
+                    target: x,
+                    type: type
+                });
+            });
+        }
+    }
+
     const promises = [];
 
-    for(const domain of request.domains)
+    for(const target in targets)
     {
-        for(const checklist of checklists)
+        for(const checklist in checklists)
         {
+            if( !(target.type in availableChecklists.find(x => x.name === checklist).types) )
+            {
+                // Do not enqueue jobs that do not produce results
+                continue;
+            }
+
+            // Enqueue job
             const job = {
                 id: checklist,
                 tracker: request.tracker,
-                domain: domain
+                target: target.target,
+                type: target.type
             };
+
             promises.push(redis.insert("jobs:" + checklist, job));
         }
     }
 
+    // Wait untilk everything is enqueued.
     await Promise.all(promises);
-    res.status(201).send({status: 201, message: "Checks have succesfully been requested", tracker: request.tracker});
+
+    if(promises.length === 0)
+    {
+        res.status(400).send({
+            statuse: 400,
+            message: "No checklists could be requested, malformed request.",
+            requested: promises.length
+        });
+        return;
+    }
+
+    // Send response
+    res.status(201).send({
+        status: 201,
+        message: "Checklists have succesfully been requested.",
+        tracker: request.tracker,
+        requested: promises.length
+    });
 });
 
 router.get("/poll", async (req, res) => {

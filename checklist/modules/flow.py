@@ -51,11 +51,11 @@ class Flow:
         """
         self.running = False
 
-    def run(self, domain: str) -> list:
-        """Run the flow on a specific domain.
+    def run(self, job: dict) -> list:
+        """Run a flow job.
 
         Args:
-            domain (str): The domain to execute the flow on.
+            job (dict): The job to run.
 
         Returns:
             list: A list of results from the indivdual checks.
@@ -83,7 +83,7 @@ class Flow:
 
             # Run all checks in stage
             for check in stage['checks']:
-                checks.append(Popen([sys.executable, os.path.join(os.getcwd(), check), domain], stdout=PIPE, encoding="utf-8", env=env))
+                checks.append(Popen([sys.executable, os.path.join(os.getcwd(), check), job["type"], job["target"]], stdout=PIPE, encoding="utf-8", env=env))
 
             busy = True
 

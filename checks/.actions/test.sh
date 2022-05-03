@@ -7,7 +7,7 @@ if [ -z "$2" ];
 then
     REGISTRY="ghcr.io/watcherwhale"
 else
-    REGISTRY="$2"
+    REGISTRY="$3"
 fi
 
 for DIR in $DIRS

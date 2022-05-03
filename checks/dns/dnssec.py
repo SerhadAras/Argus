@@ -9,8 +9,10 @@ dnsResolver = "8.8.8.8"
 def main():
     """Main function
     """
-    domain = sys.argv[1]
-    testdnssec(domain)
+    type = sys.argv[1]
+    target = sys.argv[2]
+
+    testdnssec(target)
 
 def testdnssec(domain):
     """Test if DNSSEC is enabled for a specific domain.

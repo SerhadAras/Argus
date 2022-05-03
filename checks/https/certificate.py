@@ -68,5 +68,5 @@ def main(hostname: str, port: str = '443') -> int:
         print(json.dumps(results))
 
 if __name__ == '__main__':
-    DOMAIN = sys.argv[1]
-    main(DOMAIN)
+    target = sys.argv[2]
+    main(target)

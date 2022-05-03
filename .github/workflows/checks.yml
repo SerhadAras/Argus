@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Test checklists
-        run: ./.actions/test.sh $DOMAIN ${GITHUB_SHA}
+        run: ./.actions/test.sh domain $DOMAIN ${GITHUB_SHA}
         working-directory: checks
         env:
           DOMAIN: ${{ secrets.DOMAIN }}

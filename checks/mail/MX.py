@@ -24,4 +24,4 @@ def mxTest(domain: str) -> dict:
     return res
 
 if __name__ == "__main__":
-    print(json.dumps(mxTest(sys.argv[1])))
+    print(json.dumps(mxTest(sys.argv[2])))

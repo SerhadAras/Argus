@@ -6,29 +6,42 @@ import dns.resolver
 import geoip2.database
 
 
-def main(domain):
-    """Check if a domain is hosted in the EU.
+def main(target, type):
+    """main.
 
     Args:
-        domain (str): The domain to check.
+        target (str): The target to check.
+        type (str): The target type.
     """
-    ips = []
+    targets = []
     results = []
 
-    try:
-        result = dns.resolver.resolve(domain)
-        for ipval in result:
-            ips.append(ipval.to_text())
-    except:
-        print("No IP address found for this domain.", file=sys.stderr)
-        print('{}')
+    if type == "domain":
+        targets = resolve(target)
+    elif type == "ip":
+        targets.append(target)
+    else:
+        print("{}")
         exit()
 
     with geoip2.database.Reader('GeoLite2-City.mmdb') as reader:
-        for ip in ips:
+        for ip in targets:
             results.append(checkIp(ip, reader))
 
     print(json.dumps(results))
+
+def resolve(domain: str):
+    """Resolve a domain to a set of ip addresses.
+    """
+    ips = []
+    try:
+        result = dns.resolver.resolve(domain)
+        for ipVal in result:
+            ips.append(ipVal.to_text())
+        return ips
+    except:
+        print("{}")
+        sys.exit(0)
 
 
 def checkIp(ip: str, reader: geoip2.database.Reader) -> dict:
@@ -73,5 +86,4 @@ def checkIp(ip: str, reader: geoip2.database.Reader) -> dict:
         }
 
 if __name__ == "__main__":
-    domain = sys.argv[1]
-    main(domain)
+    main(sys.argv[2], sys.argv[1])

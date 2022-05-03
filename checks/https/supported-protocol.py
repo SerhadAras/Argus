@@ -4,16 +4,16 @@ import json
 
 VERSIONS = ["1.3", "1.2", "1.1", "1.0"]
 
-def main(domain: str):
+def main(target: str):
     """main.
 
     Args:
-        domain (str): domain
+        target (str): The target to perform the check on.
     """
     acceptedVersions = []
 
     for version in VERSIONS:
-        curl = Popen(["curl", "-k", "-L", "--tls-max", version, "--tlsv" + version, domain], stdout=DEVNULL, stderr=DEVNULL)
+        curl = Popen(["curl", "-k", "-L", "--tls-max", version, "--tlsv" + version, target], stdout=DEVNULL, stderr=DEVNULL)
         code = curl.wait()
 
         if code == 0:
@@ -42,4 +42,4 @@ def main(domain: str):
         }))
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[2])

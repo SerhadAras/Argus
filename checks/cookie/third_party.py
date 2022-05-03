@@ -70,7 +70,8 @@ def main():
     """Main function
     """
 
-    target = sys.argv[1]
+    type = sys.argv[1]
+    target = sys.argv[2]
 
     options = webdriver.ChromeOptions()
     options.add_argument("--incognito")

@@ -49,7 +49,7 @@ def main():
                 continue
 
             logger.info(f"running job: {CURRENT_JOB}", flow.getName())
-            results = flow.run(CURRENT_JOB['domain'])
+            results = flow.run(CURRENT_JOB)
 
             if results is None:
                 logger.info("Pushing back running job.", flow.getName())
