@@ -1,6 +1,11 @@
 const createService = require("service");
 
-const service = createService("metrics", "/api/v1");
+const service = createService("metrics", "/api/v1", {
+    redis: {
+        enabled: true,
+        sentinel: false
+    }
+});
 const { redis, router } = service;
 
 // Get metrics for a resource

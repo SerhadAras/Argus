@@ -43,7 +43,7 @@ def pushResults(results: dict) -> bool:
     else:
         res = requests.post(URL + "results", json=results)
 
-    return req.status_code == 201
+    return res.status_code == 201
 
 def pushBack(check: dict):
     """"
