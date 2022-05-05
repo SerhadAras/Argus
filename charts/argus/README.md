@@ -1,6 +1,6 @@
 # Argus - Helm Chart
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square&logo=helm)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square&logo=helm)
 
 An automated security checking platform that is highly extensible.
 
@@ -86,7 +86,8 @@ The Selenium deployment configuration.
 | selenium.affinity | object | `{}` | Affinity for pod assignment. |
 | selenium.enabled | bool | `true` | Enable the Selenium deployment. |
 | selenium.nodeSelector | object | `{}` | Node Labels for pod assignment. |
-| selenium.replicas | int | `3` | Amount of Chrome node replicas. |
+| selenium.replicas.max | int | `5` | Maximum node replicas. |
+| selenium.replicas.min | int | `1` | Minimum node replicas. |
 | selenium.tag | string | `"latest"` | The selenium hub/Chrome image tag. |
 | selenium.tolerations | list | `[]` | Tolerations for pod assignment. |
 
@@ -103,6 +104,7 @@ Cert-master service configuration. Only necessary when `security.cluster.tls` is
 | affinity | object | `{}` | Affinity for pod assignment. |
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1/certificate"` | Base path of the service. |
+| env | object | `{}` | Custom environment variables to add to the service. |
 | loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
@@ -122,6 +124,7 @@ Descriptions service configuration.
 | affinity | object | `{}` | Affinity for pod assignment. |
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/descriptions"` | Base path of the service. |
+| env | object | `{}` | Custom environment variables to add to the service. |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicas.max | int | `10` | Maximum replicas. |
@@ -140,6 +143,7 @@ Gateway service configuration.
 | affinity | object | `{}` | Affinity for pod assignment. |
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1/checks"` | Base path of the service. |
+| env | object | `{}` | Custom environment variables to add to the service. |
 | loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
@@ -159,6 +163,7 @@ Metrics service configuration.
 | affinity | object | `{}` | Affinity for pod assignment. |
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1"` | Base path of the service. |
+| env | object | `{"SELENIUM_URL":"http://selenium-hub:4444"}` | Custom environment variables to add to the service. |
 | loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
@@ -178,6 +183,7 @@ Sequencer service configuration.
 | affinity | object | `{}` | Affinity for pod assignment. |
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1"` | Base path of the service. |
+| env | object | `{}` | Custom environment variables to add to the service. |
 | loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |

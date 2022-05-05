@@ -1,0 +1,33 @@
+---
+{{- if $.Values.autoscaling.enabled }}
+---
+apiVersion: custompodautoscaler.com/v1
+kind: CustomPodAutoscaler
+metadata:
+  name: "argus-selenium-autoscaler"
+  labels:
+    {{- include "argus.labels" $ | nindent 4 }}
+spec:
+  template:
+    spec:
+      metadata:
+      imagePullSecrets:
+        {{- toYaml $.Values.image.imagePullSecrets | nindent 8 }}
+      containers:
+        - name: "selenium-autoscaler"
+          image: "{{ $.Values.image.registry }}/checklist-scaler:{{ $.Values.autoscaling.tag }}"
+          imagePullPolicy: "{{ $.Values.image.pullPolicy }}"
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: "argus-selenium-chrome"
+  config:
+    - name: interval
+      value: "10000"
+    - name: minReplicas
+      value: "{{ .Values.selenium.replicas.min }}"
+    - name: maxReplicas
+      value: "{{ .Values.selenium.replicas.max }}"
+    - name: downscaleStabilization
+      value: "200"
+{{- end }}

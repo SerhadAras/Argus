@@ -62,6 +62,9 @@ services:
     # -- Pod security context.
     securityContext: {}
 
+    # -- Custom environment variables to add to the service.
+    env: {}
+
     replicas:
       # -- Minimum replicas.
       min: 1
@@ -107,6 +110,9 @@ services:
     # -- Pod security context.
     securityContext: {}
 
+    # -- Custom environment variables to add to the service.
+    env: {}
+
     replicas:
       # -- Minimum replicas.
       min: 1
@@ -146,6 +152,9 @@ services:
 
     # -- Pod security context.
     securityContext: {}
+
+    # -- Custom environment variables to add to the service.
+    env: {}
 
     replicas:
       # -- Minimum replicas.
@@ -192,6 +201,10 @@ services:
     # -- Pod security context.
     securityContext: {}
 
+    # -- Custom environment variables to add to the service.
+    env:
+      SELENIUM_URL: "http://selenium-hub:4444"
+
     replicas:
       # -- Minimum replicas.
       min: 1
@@ -237,6 +250,9 @@ services:
 
     # -- Pod security context.
     securityContext: {}
+
+    # -- Custom environment variables to add to the service.
+    env: {}
 
     replicas:
       # -- Minimum replicas.
@@ -406,8 +422,11 @@ selenium:
   # -- The selenium hub/Chrome image tag.
   tag: latest
 
-  # -- Amount of Chrome node replicas.
-  replicas: 3
+  replicas:
+    # -- Minimum node replicas.
+    min: 1
+    # -- Maximum node replicas.
+    max: 5
 
   # -- Node Labels for pod assignment.
   nodeSelector: {}

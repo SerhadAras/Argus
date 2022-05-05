@@ -96,5 +96,10 @@ spec:
               value: "FALSE"
 
             {{- end}}
+
+            {{- range $k, $v := $value.env }}
+            - name: {{ $k }}
+              value: {{ $v }}
+            {{- end }}
 {{- end }}
 {{- end }}

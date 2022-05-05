@@ -58,8 +58,9 @@ metadata:
   labels:
     {{- include "argus.labels" . | nindent 4 }}
     app: selenium-node-chrome
+    throughput: "5"
 spec:
-  replicas: {{ .Values.selenium.replicas }}
+  replicas: {{ .Values.selenium.replicas.min }}
   selector:
     matchLabels:
       app: selenium-node-chrome

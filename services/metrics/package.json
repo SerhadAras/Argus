@@ -1,6 +1,6 @@
 {
   "name": "metrics",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A service that gets the metrics for a resource",
   "main": "src/index.js",
   "repository": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/WatcherWhale/SecProA#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "service": "file:../service"
   }
 }

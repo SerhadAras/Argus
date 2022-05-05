@@ -11,7 +11,7 @@ metric:
   timeout: 2500
   http:
     method: "POST"
-    url: "http://metrics-server:3000/api/v1/jobs"
+    url: "http://metrics-server:3000/api/v1/metric"
     successCodes:
       - 200
     headers:
