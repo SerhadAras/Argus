@@ -1,42 +1,42 @@
 ---
-{{- range $.Values.checklists }}
+{{- range $name, $value := $.Values.checklists }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ .name }}-checklist"
+  name: "{{ $name }}-checklist"
   labels:
     app: checklist
-    throughput: "{{ .throughput }}"
-    checklist: "{{ .name }}"
+    throughput: "{{ $value.throughput }}"
+    checklist: "{{ $name }}"
     {{- include "argus.labels" $ | nindent 4 }}
   annotations:
-    {{- toYaml .annotations | nindent 4 }}
+    {{- toYaml $value.annotations | nindent 4 }}
 spec:
-  replicas: {{ .replicas.min }}
+  replicas: {{ $value.replicas.min }}
   selector:
     matchLabels:
       app: checklist
-      checklist: "{{ .name }}"
+      checklist: "{{ $name }}"
   template:
     metadata:
       labels:
         app: checklist
-        checklist: "{{ .name }}"
+        checklist: "{{ $name }}"
       annotations:
-        {{- set .podAnnotations "autocert.step.sm/name" ( printf "%s-checklist" .name) | toYaml | nindent 8 }}
+        {{- set $value.podAnnotations "autocert.step.sm/name" ( printf "%s-checklist" $name) | toYaml | nindent 8 }}
     spec:
       tolerations:
-        {{- toYaml .tolerations | nindent 8 }}
+        {{- toYaml $value.tolerations | nindent 8 }}
       affinity:
-        {{- toYaml .affinity | nindent 8 }}
+        {{- toYaml $value.affinity | nindent 8 }}
       nodeSelector:
-        {{- toYaml .nodeSelector | nindent 8 }}
+        {{- toYaml $value.nodeSelector | nindent 8 }}
       imagePullSecrets:
         {{- toYaml $.Values.image.imagePullSecrets | nindent 8 }}
       containers:
-        - name: "{{ .name }}-checklist"
-          image: "{{ $.Values.image.registry }}/checklist:{{ .name }}-{{ .tag }}"
+        - name: "{{ $name }}-checklist"
+          image: "{{ $.Values.image.registry }}/checklist:{{ $name }}-{{ .tag }}"
           imagePullPolicy: "{{ $.Values.image.pullPolicy }}"
           env:
             {{- if $.Values.security.cluster.tls }}
@@ -55,7 +55,7 @@ spec:
               value: "http://sequencer-server:3000"
             {{- end }}
 
-            {{- range $k, $v := .env }}
+            {{- range $k, $v := $value.env }}
             - name: {{ $k }}
               value: {{ $v }}
             {{- end }}

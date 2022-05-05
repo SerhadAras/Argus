@@ -1,11 +1,11 @@
 ---
 {{- if $.Values.autoscaling.enabled }}
-{{- range $.Values.checklists }}
+{{- range $name, $value := $.Values.checklists }}
 ---
 apiVersion: custompodautoscaler.com/v1
 kind: CustomPodAutoscaler
 metadata:
-  name: "{{ .name }}-autoscaler"
+  name: "{{ $name }}-autoscaler"
   labels:
     {{- include "argus.labels" $ | nindent 4 }}
 spec:
@@ -15,21 +15,21 @@ spec:
       imagePullSecrets:
         {{- toYaml $.Values.image.imagePullSecrets | nindent 8 }}
       containers:
-        - name: "{{ .name }}-autoscaler"
+        - name: "{{ $name }}-autoscaler"
           image: "{{ $.Values.image.registry }}/checklist-scaler:{{ $.Values.autoscaling.tag }}"
           imagePullPolicy: "{{ $.Values.image.pullPolicy }}"
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: "{{ .name }}-checklist"
+    name: "{{ $name }}-checklist"
   config:
     - name: interval
-      value: "{{ .interval }}"
+      value: "{{ $value.interval }}"
     - name: minReplicas
-      value: "{{ .replicas.min }}"
+      value: "{{ $value.replicas.min }}"
     - name: maxReplicas
-      value: "{{ .replicas.max }}"
+      value: "{{ $value.replicas.max }}"
     - name: downscaleStabilization
-      value: "{{ .stabilization }}"
+      value: "{{ $value.stabilization }}"
 {{- end }}
 {{- end }}

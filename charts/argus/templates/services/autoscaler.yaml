@@ -1,0 +1,23 @@
+---
+{{- if .Values.autoscaling }}
+
+{{- range $name, $value := .Values.services }}
+{{- if not (and (eq $name "cert-master") (not $.Values.security.cluster.tls)) }}
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "{{ $name }}-autoscaler"
+  labels:
+    {{- include "argus.labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: "{{ $name }}"
+  minReplicas: {{ $value.replicas.min }}
+  maxReplicas: {{ $value.replicas.max }}
+  targetCPUUtilizationPercentage: 90
+{{- end }}
+{{- end }}
+{{- end }}

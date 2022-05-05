@@ -1,0 +1,53 @@
+# Argus - Helm Chart
+{{ template "chart.deprecationWarning" . }}
+
+![Version: {{ .Version }}](https://img.shields.io/badge/Version-{{ .Version | replace "-" "--" }}-informational?style=flat-square&logo=helm)
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+## Values
+{{- range .Values }}
+
+{{- if contains "services." .Key }}
+
+{{- if regexMatch "^services\\.[A-Za-z-]*$" .Key }}
+
+#### {{ substr 9 -1 .Key | title }}
+
+{{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }}
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- else }}
+| {{ regexReplaceAll "^services\\.[A-Za-z-]*\\." .Key "" }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+{{- end }}
+
+{{- else if contains "." .Key }}
+| {{ regexReplaceAll "^checklists\\.[A-Za-z-]*\\." .Key "" }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+{{- else }}
+
+### {{ .Key | title }}
+
+{{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }}
+
+{{- if ne "services" .Key }}
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- end }}
+{{- end }}
+
+{{- end }}
+
+{{ template "chart.sourcesSection" . }}
+
+## Chart Maintainers
+
+| Name | GitHub |
+| ---- | ------ |
+{{- range .Maintainers }}
+| {{ .Name }} | [{{ .Url }}]({{ .Url }})
+{{- end }}

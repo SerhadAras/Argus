@@ -1,136 +1,302 @@
 ---
+# -- General app settings/metadata.
 app:
+  # -- The name of the deployment.
   name: argus
+  # -- The hostname used in the ingress.
   host: argus.local
 
+# -- Security Settings.
 security:
   cluster:
+    # -- Enable mTLS & TLS throughout the cluster.
     tls: false
 
   ingress:
+    # -- Enable mTLS at the ingress.
     clientAuth: true
+    # -- The CA Certificate secret.
     caSecret: "argus-ca"
+    # -- The TLS secret for https.
     tlsSecret: "argus-tls"
 
+# -- Container image settings.
 image:
+  # -- The image registry to use.
   registry: "ghcr.io/watcherwhale"
 
+  # -- A list of image pull secrets to use.
+  # <br>
+  # Docker credentials secrets.
   imagePullSecrets:
     - name: ghcr-io
 
-  pullPolicy: Always
+  # -- Default pullPolicy.
+  pullPolicy: IfNotPresent
 
-gateway:
-  loglevel: info
+# -- Configuration for all services.
+services:
+  # -- Gateway service configuration.
+  # @default -- Service config
+  gateway:
+    # -- Log level.
+    #
+    # (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`)
+    loglevel: info
 
-  annotations: {}
-  podAnnotations:
-    autocert.step.sm/name: gateway-server
+    # -- Base path of the service.
+    basePath: "/api/v1/checks"
 
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  securityContext: {}
-
-  replicas:
-    min: 1
-    max: 10
-
-  tag: v0.1.0
-
-sequencer:
-  loglevel: info
-
-  replicas:
-    min: 1
-    max: 10
-
-  annotations: {}
-  podAnnotations: {}
-
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  securityContext: {}
-
-  tag: v0.1.0
-
-descriptions:
-  replicas:
-    min: 1
-    max: 10
-
-  annotations: {}
-  podAnnotations: {}
-
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  securityContext: {}
-
-  tag: v0.1.0
-
-certmaster:
-  loglevel: info
-
-  replicas:
-    min: 1
-    max: 3
-
-  annotations: {}
-  podAnnotations: {}
-
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  securityContext: {}
-
-  tag: v0.1.0
-
-metrics:
-  loglevel: info
-
-  annotations: {}
-  podAnnotations: {}
-
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  securityContext: {}
-
-  replicas:
-    min: 1
-    max: 10
-
-  tag: v0.1.0
-
-checklists:
-  - name: dns
-    tag: latest
-
+    # -- Deployment annotations.
     annotations: {}
+    # -- Pod annotations.
     podAnnotations: {}
 
+    # -- Node Labels for pod assignment.
     nodeSelector: {}
+    # -- Affinity for pod assignment.
     affinity: {}
+    # -- Tolerations for pod assignment.
     tolerations: []
 
+    # -- Pod security context.
+    securityContext: {}
+
+    replicas:
+      # -- Minimum replicas.
+      min: 1
+      # -- Maximum replicas.
+      max: 10
+
+    # -- Pod resources.
+    # @default -- Kuberenetes resource config.
+    resources:
+      requests:
+        memory: "15Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "300m"
+
+    # -- Image tag.
+    tag: v1.0.0
+
+  # -- Sequencer service configuration.
+  # @default -- Service config
+  sequencer:
+    # -- Log level.
+    #
+    # (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`)
+    loglevel: info
+
+    # -- Base path of the service.
+    basePath: "/api/v1"
+
+    # -- Deployment annotations.
+    annotations: {}
+    # -- Pod annotations.
+    podAnnotations: {}
+
+    # -- Node Labels for pod assignment.
+    nodeSelector: {}
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Tolerations for pod assignment.
+    tolerations: []
+
+    # -- Pod security context.
+    securityContext: {}
+
+    replicas:
+      # -- Minimum replicas.
+      min: 1
+      # -- Maximum replicas.
+      max: 10
+
+    # -- Pod resources.
+    # @default -- Kuberenetes resource config.
+    resources:
+      requests:
+        memory: "15Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "300m"
+
+    # -- Image tag.
+    tag: v1.0.0
+
+  # -- Descriptions service configuration.
+  # @default -- Service config
+  descriptions:
+    # -- Base path of the service.
+    basePath: "/descriptions"
+
+    # -- Deployment annotations.
+    annotations: {}
+    # -- Pod annotations.
+    podAnnotations: {}
+
+    # -- Node Labels for pod assignment.
+    nodeSelector: {}
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Tolerations for pod assignment.
+    tolerations: []
+
+    # -- Pod security context.
+    securityContext: {}
+
+    replicas:
+      # -- Minimum replicas.
+      min: 1
+      # -- Maximum replicas.
+      max: 10
+
+    # -- Pod resources.
+    # @default -- Kuberenetes resource config.
+    resources:
+      requests:
+        memory: "15Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "300m"
+
+    # -- Image tag.
+    tag: v1.0.0
+
+  # -- Metrics service configuration.
+  # @default -- Service config
+  metrics:
+    # -- Log level.
+    #
+    # (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`)
+    loglevel: info
+
+    # -- Base path of the service.
+    basePath: "/api/v1"
+
+    # -- Deployment annotations.
+    annotations: {}
+    # -- Pod annotations.
+    podAnnotations: {}
+
+    # -- Node Labels for pod assignment.
+    nodeSelector: {}
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Tolerations for pod assignment.
+    tolerations: []
+
+    # -- Pod security context.
+    securityContext: {}
+
+    replicas:
+      # -- Minimum replicas.
+      min: 1
+      # -- Maximum replicas.
+      max: 10
+
+    # -- Pod resources.
+    # @default -- Kuberenetes resource config.
+    resources:
+      requests:
+        memory: "15Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "300m"
+
+    # -- Image tag.
+    tag: v1.0.0
+
+  # -- Cert-master service configuration.
+  # Only necessary when `security.cluster.tls` is enabled.
+  # @default -- Service config
+  cert-master:
+    # -- Log level.
+    #
+    # (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`)
+    loglevel: info
+
+    # -- Base path of the service.
+    basePath: "/api/v1/certificate"
+
+    # -- Deployment annotations.
+    annotations: {}
+    # -- Pod annotations.
+    podAnnotations: {}
+
+    # -- Node Labels for pod assignment.
+    nodeSelector: {}
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Tolerations for pod assignment.
+    tolerations: []
+
+    # -- Pod security context.
+    securityContext: {}
+
+    replicas:
+      # -- Minimum replicas.
+      min: 1
+      # -- Maximum replicas.
+      max: 10
+
+    # -- Pod resources.
+    # @default -- Kuberenetes resource config.
+    resources:
+      requests:
+        memory: "15Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "300m"
+
+    # -- Image tag.
+    tag: v1.0.0
+
+# -- A list of all available checklists that you are able to deploy.
+# If desired, it is possible to add your own checks here.
+# <br>
+# Default available checklists: `cookie`, `dns`, `headers`, `https`, `ip` and `mail`.
+checklists:
+  dns:
+    # -- The image tag of the checklist container.
+    tag: v1.0.0
+
+    # -- Deployment annotations.
+    annotations: {}
+    # -- Pod annotations.
+    podAnnotations: {}
+
+    # -- Node Labels for pod assignment.
+    nodeSelector: {}
+    # -- Affinity for pod assignment.
+    affinity: {}
+    # -- Tolerations for pod assignment.
+    tolerations: []
+
+    # -- Custom environment variables to add to the checklist.
     env: {}
 
+    # -- Check throughput.
+    # <br>
+    # The amount of request the checklist can handle in a specified interval.
     throughput: 100
+    # -- The throughput interval, the interval to periodically check the current queue size (in ms).
     interval: 10000
+    # -- The stabilization interval, used for down scaling (in s).
     stabilization: 200
     replicas:
+      # -- Minimum replicas.
       min: 1
+      # -- Maximum replicas.
       max: 5
 
-  - name: headers
-    tag: latest
+  headers:
+    tag: v1.0.0
 
     annotations: {}
     podAnnotations: {}
@@ -148,8 +314,8 @@ checklists:
       min: 1
       max: 5
 
-  - name: https
-    tag: latest
+  https:
+    tag: v1.0.0
 
     annotations: {}
     podAnnotations: {}
@@ -167,8 +333,8 @@ checklists:
       min: 1
       max: 5
 
-  - name: ip
-    tag: latest
+  ip:
+    tag: v1.0.0
 
     annotations: {}
     podAnnotations: {}
@@ -186,8 +352,8 @@ checklists:
       min: 1
       max: 10
 
-  - name: mail
-    tag: latest
+  mail:
+    tag: v1.0.0
 
     annotations: {}
     podAnnotations: {}
@@ -205,8 +371,8 @@ checklists:
       min: 1
       max: 10
 
-  - name: cookie
-    tag: latest
+  cookie:
+    tag: v1.0.0
 
     annotations: {}
     podAnnotations: {}
@@ -225,34 +391,55 @@ checklists:
       min: 1
       max: 10
 
+# -- Autoscaling configuration.
 autoscaling:
+  # -- Enable/Disable autoscaling.
   enabled: true
-  tag: latest
 
+  # -- The image tag for the custom pod autoscaler.
+  tag: v1.0.0
+
+# -- The Selenium deployment configuration.
 selenium:
+  # -- Enable the Selenium deployment.
   enabled: true
+  # -- The selenium hub/Chrome image tag.
   tag: latest
 
+  # -- Amount of Chrome node replicas.
   replicas: 3
 
+  # -- Node Labels for pod assignment.
   nodeSelector: {}
+  # -- Affinity for pod assignment.
   affinity: {}
+  # -- Tolerations for pod assignment.
   tolerations: []
 
+# -- Bitnami Redis configuration.
+# <br>
+# See https://github.com/bitnami/charts/tree/master/bitnami/redis for more config options.
+# @default -- Bitnami Redis config
 redis:
+  # -- Master settings.
   master:
     persistence:
       enabled: false
 
   replica:
+    # -- Amount of replicas.
     replicaCount: 3
 
     persistence:
       enabled: false
 
   sentinel:
+    # -- Enable/Disable sentinels.
+    # <br>
+    # Must be enabled, to work correctly.
     enabled: true
 
+  # -- Authentication settings.
   auth:
     enabled: true
     sentinel: true

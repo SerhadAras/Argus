@@ -1,0 +1,100 @@
+---
+{{- range $name, $value := .Values.services }}
+{{- if not (and (eq $name "cert-master") (not $.Values.security.cluster.tls)) }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ $name }}"
+  labels:
+    {{- include "argus.labels" $ | nindent 4 }}
+    app: "{{ $name }}"
+  annotations:
+    {{- toYaml $value.annotations | nindent 4 }}
+spec:
+  replicas: {{ $value.replicas.min }}
+  selector:
+    matchLabels:
+      app: "{{ $name }}"
+  template:
+    metadata:
+      annotations:
+        {{- set $value.podAnnotations "autocert.step.sm/name" (printf "%s-server" $name ) | toYaml | nindent 8 }}
+      labels:
+        app: "{{ $name }}"
+    spec:
+      {{- if eq $name "cert-master" }}
+      serviceAccount: cert-master
+      serviceAccountName: cert-master
+      {{- end }}
+
+      tolerations:
+        {{- toYaml $value.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml $value.affinity | nindent 8 }}
+      nodeSelector:
+        {{- toYaml $value.nodeSelector | nindent 8 }}
+      imagePullSecrets:
+        {{- toYaml $.Values.image.imagePullSecrets | nindent 8 }}
+      securityContext:
+        {{- toYaml $value.securityContext | nindent 8 }}
+      containers:
+        - name: "{{ $name }}"
+          image: "{{ $.Values.image.registry }}/{{ $name }}:{{ $value.tag }}"
+          imagePullPolicy: "{{ $.Values.image.pullPolicy }}"
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: "{{ $value.basePath }}/health"
+              port: 3000
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            failureThreshold: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            {{- toYaml $value.resources | nindent 12 }}
+          env:
+            # Web port
+            - name: PORT
+              value: "3000"
+
+            # Redis settings
+            - name: REDIS_HOST
+              value: "{{ $.Values.redis.fullnameOverride | default (printf "%s-redis" $.Chart.Name ) }}"
+            {{- if ne $name "metrics" }}
+            - name: REDIS_PORT
+              value: "26379"
+            {{- else }}
+            - name: REDIS_PORT
+              value: "6379"
+            {{- end }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ $.Values.redis.fullnameOverride | default (printf "%s-redis" $.Chart.Name ) }}"
+                  key: redis-password
+
+            - name: LOGLEVEL
+              value: "{{ $value.loglevel }}"
+
+            {{- if $.Values.security.cluster.tls}}
+
+            - name: TLS_ENABLED
+              value: "TRUE"
+            - name: CERT_PATH
+              value: "/var/run/autocert.step.sm/site.crt"
+            - name: KEY_PATH
+              value: "/var/run/autocert.step.sm/site.key"
+            - name: CA_PATH
+              value: "/var/run/autocert.step.sm/root.crt"
+
+            {{- else }}
+
+            - name: TLS_ENABLED
+              value: "FALSE"
+
+            {{- end}}
+{{- end }}
+{{- end }}

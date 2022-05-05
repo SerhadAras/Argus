@@ -19,6 +19,9 @@ metadata:
     {{- else if and .Values.security.ingress.clientAuth .Values.security.ingress.caSecret }}
     nginx.ingress.kubernetes.io/auth-tls-secret: "{{ .Values.security.ingress.caSecret }}"
     {{- end }}
+    {{- if .Values.tlsSecret }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    {{- end }}
 spec:
   ingressClassName: nginx
   defaultBackend:
@@ -42,7 +45,7 @@ spec:
               service:
                 name: descriptions
                 port:
-                  number: 80
+                  number: 3000
       {{- if .Values.security.cluster.tls }}
           - path: /api/v1/certificate
             pathType: Prefix
