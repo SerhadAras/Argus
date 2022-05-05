@@ -48,7 +48,6 @@ def main():
 
     while running:
         try:
-            logger.info("requesting job")
             CURRENT_JOB = jobs.requestJob(flow.getName())
 
             if CURRENT_JOB is None:

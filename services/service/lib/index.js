@@ -6,7 +6,7 @@ const app = require("./web.js");
 module.exports = (serviceName, path, options = { redis: { enabled : true, sentinel: true } }) => {
 
     // Create logger
-    const logFile = LogFile.createLogFile(serviceName, process.env.LOGLEVEL || "http");
+    const logFile = LogFile.createLogFile(serviceName, process.env.LOGLEVEL || "info");
     const logger = logFile.getLogger();
 
     // Create Redis client
