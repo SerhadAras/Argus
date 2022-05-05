@@ -2,9 +2,9 @@
 name: cookie
 version: 0.1.2
 tags:
-  - cookies
   - passive
   - web
+  - gdpr
 type:
   - domain
 stages:

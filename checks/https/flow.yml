@@ -2,11 +2,8 @@
 name: https
 version: 0.2.1
 tags:
-  - https
   - passive
   - web
-  - tls
-  - ssl
 type:
   - domain
 stages:

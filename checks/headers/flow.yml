@@ -2,8 +2,8 @@
 name: headers
 version: 0.2.1
 tags:
-  - header
   - passive
+  - web
 type:
   - domain
 stages:

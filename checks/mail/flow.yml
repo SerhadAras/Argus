@@ -2,11 +2,7 @@
 name: mail
 version: 0.2.1
 tags:
-  - mail
   - passive
-  - DKIM
-  - DMARC
-  - SPF
 type:
   - domain
 stages:
