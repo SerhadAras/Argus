@@ -13,8 +13,7 @@ if SELENIUM_URL is None or SELENIUM_URL == "":
     exit()
 
 def checkCookies(driver, target, https = True):
-    """Test if DNSSEC is enabled for a specific domain.
-
+    """
     Args:
         driver (selenium.webdriver.Remote): The selenium web driver
         target (str): The target to check
