@@ -407,7 +407,7 @@ checklists:
       min: 1
       max: 10
 
-    malware:
+  malware:
     tag: v1.0.0
 
     annotations: {}
