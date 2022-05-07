@@ -407,6 +407,26 @@ checklists:
       min: 1
       max: 10
 
+  vulnerability:
+    tag: v1.0.0
+
+    annotations: {}
+    podAnnotations: {}
+
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+
+    env:
+      SHODAN_KEY: "<Your Shodan API key here>"
+
+    throughput: 20
+    interval: 10000
+    stabilization: 200
+    replicas:
+      min: 1
+      max: 10
+
 # -- Autoscaling configuration.
 autoscaling:
   # -- Enable/Disable autoscaling.
