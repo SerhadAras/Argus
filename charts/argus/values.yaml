@@ -407,7 +407,7 @@ checklists:
       min: 1
       max: 10
 
-  malware:
+  vulnerability:
     tag: v1.0.0
 
     annotations: {}
@@ -417,14 +417,15 @@ checklists:
     affinity: {}
     tolerations: []
 
-    env: {}
+    env:
+      SHODAN_KEY: "<Your Shodan API key here>"
 
-    throughput: 50
+    throughput: 20
     interval: 10000
     stabilization: 200
     replicas:
       min: 1
-      max: 5
+      max: 10
 
 # -- Autoscaling configuration.
 autoscaling:
