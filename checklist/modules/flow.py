@@ -106,6 +106,8 @@ class Flow:
 
             for check in checks:
                 output, err = check.communicate()
+                output = output.split("\n")
+                output = output[len(output) - 2]
 
                 try:
                     res = json.loads(output)
