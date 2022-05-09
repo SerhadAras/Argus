@@ -55,14 +55,16 @@ def checkCookies(driver, target, https = True):
             print(json.dumps({
                 "name": "third party",
                 "score": 0,
-                "message": "The website loads third party cookies without consent."
+                "message": "The website loads third party cookies without consent.",
+                "description": "third_party"
             }))
             return
 
     print(json.dumps({
         "name": "third party",
         "score": 10,
-        "message": "The website does not load third party cookies."
+        "message": "The website does not load third party cookies.",
+        "description": "third_party"
     }))
 
 def main():

@@ -108,7 +108,8 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     results.append({
                         "name": headerKey,
                         "score": value['score'],
-                        "value": headers[headerKey],
+                        "message": "Header is set up correctly.",
+                        "value": [headers[headerKey]],
                         "description": "headers"
                     })
                     valueTest = True
@@ -119,21 +120,22 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     "name": headerKey,
                     "score": 0,
                     "message": f"{headerKey} shoud be absent.",
-                    "value": headers[headerKey],
+                    "value": [headers[headerKey]],
                     "description": "headers"
                 })
             elif not valueTest and pattern['present'] is None:
                 results.append({
                     "name": headerKey,
                     "score": 10,
-                    "value": headers[headerKey],
+                    "message": "Header is set up correctly.",
                     "description": "headers"
                 })
             elif not valueTest:
                 results.append({
                     "name": headerKey,
                     "score": 0,
-                    "value": headers[headerKey],
+                    "message": "Header is not set up correctly.",
+                    "value": [headers[headerKey]],
                     "description": "headers"
                 })
 
@@ -141,12 +143,14 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
             results.append({
                 "name": headerKey,
                 "score": 10,
+                "message": "Header is set up correctly.",
                 "description": "headers"
             })
         elif pattern['present'] is None:
             results.append({
                 "name": headerKey,
                 "score": 10,
+                "message": "Header is set up correctly.",
                 "description": "headers"
             })
 
