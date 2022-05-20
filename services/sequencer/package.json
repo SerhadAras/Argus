@@ -1,6 +1,6 @@
 {
   "name": "sequencer",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "A service that dequeues tasks and queues check results",
   "main": "src/index.js",
   "repository": {
