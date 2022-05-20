@@ -9,13 +9,10 @@
         file: ./config.yml
         name: config
 
-- import_playbook: "./argus/deploy.yml"
+- import_playbook: "./kubernetes/setup.yml"
   tags:
-    - argus
+    - setup
 
-- import_playbook: "./fluentd/deploy.yml"
+- import_playbook: "./autoscaler/deploy.yml"
   tags:
-    - fluentd
-    - logging
-    - log
-  when: config.fluentd.enabled == true
+    - autoscaler
