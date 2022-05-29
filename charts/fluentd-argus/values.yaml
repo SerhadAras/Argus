@@ -1,8 +1,13 @@
+# -- The fluentd image to use
 image: fluent/fluentd-kubernetes-daemonset
+# -- The image tag to use
 tag: v1-debian-elasticsearch
 
+# -- Extra environment variables for fluentd pods.
 env: []
 
+# -- A custom fluentd config to add to the deployment.
+# @default -- Fluentd config
 config: |
   # Fluentd custom config
   #

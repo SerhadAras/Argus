@@ -1,0 +1,22 @@
+# Argus - Helm Chart
+{{ template "chart.deprecationWarning" . }}
+
+![Version: {{ .Version }}](https://img.shields.io/badge/Version-{{ .Version | replace "-" "--" }}-informational?style=flat-square&logo=helm)
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+## Chart Maintainers
+
+| Name | GitHub |
+| ---- | ------ |
+{{- range .Maintainers }}
+| {{ .Name }} | [{{ .Url }}]({{ .Url }})
+{{- end }}

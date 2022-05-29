@@ -1,219 +1,24 @@
 ---
-app:
-  # The name of the application
-  name: argus
-
-  # The hostname for the ingress endpoint.
-  host: argus.local
-
-  # The kubernetes namespace to deploy to
-  namespace: argus
-
-security:
-  cluster:
-    # Enable/Disable TLS Encryption and
-    #  Client Authorization in the cluster.
-    #
-    #  If the kubernetes environment does not provide
-    #  encrypted node to node connections, enable this.
-    #
-    #  Default: false
-    tls: false
-
-  ingress:
-    # Enable/Disable Client Authorization
-    #  at the ingress.
-    #
-    #  Use mTLS to authorize clients at the ingress,
-    #  but not further.
-    #
-    #  Default: true
-    clientAuth: true
-
-    # Can be left empty when:
-    #  app.security.cluster.tls is enabled
-    #  or
-    #  clientAuth is disabled
-    caSecret: "argus-ca"
-
-    # The tls secret for the ingress
-    tlsSecret: "argus-tls"
-
-image:
-  # Registry / account to push the images to
-  #  <registry>/<image name>:<tag>
-  registry: "ghcr.io/watcherwhale"
-
-  imagePullSecrets:
-    - name: ghcr-io
-
-  # The docker pull poliicy
-  # - Never
-  # - Always
-  # - IfNotPresent
-  pullPolicy: Always
-
-gateway:
-  # The log level of this service
-  #   - error
-  #   - warn
-  #   - info
-  #   - http (http access logs)
-  #   - verbose
-  #   - debug
-  #   - silly
-  loglevel: info
-
-  # Amount of gateway minimum and maximum replicas.
-  replicas:
-    min: 3
-    max: 10
-
-  # The docker tag to pull
-  tag: latest
-
-sequencer:
-  # The log level of this service
-  #   - error
-  #   - warn
-  #   - info
-  #   - http (http access logs)
-  #   - verbose
-  #   - debug
-  #   - silly
-  loglevel: info
-
-  # Amount of sequencer minimum and maximum replicas.
-  replicas:
-    min: 3
-    max: 10
-
-  # The docker tag to pull
-  tag: latest
-
-certmaster:
-  loglevel: info
-
-  replicas:
-    min: 1
-    max: 3
-
-  tag: latest
-
-# All checklists to deploy (and/or build) to the cluster.
-#   Name is the name of the image
-checklists:
-
-  - name: dns
-
-    # The docker image tag: <name>-<tag>
-    tag: latest
-
-    # Amount of jobs one instance can handle
-    #  in the specified interval.
-    throughput: 100
-
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
-    interval: 10000
-
-    # Amount of time (seconds) to stabilize downscaling.
-    stabilization: 200
-
-    # Define the range of amount of replicas to deploy.
-    replicas:
-      min: 1
-      max: 5
-
-  - name: headers
-
-    # The docker image tag: <name>-<tag>
-    tag: latest
-
-    # Amount of jobs one instance can handle
-    #  in the specified interval.
-    throughput: 50
-
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
-    interval: 10000
-
-    # Amount of time (seconds) to stabilize downscaling.
-    stabilization: 200
-
-    # Define the range of amount of replicas to deploy.
-    replicas:
-      min: 1
-      max: 5
-
-  - name: https
-
-    # The docker image tag: <name>-<tag>
-    tag: latest
-
-    # Amount of jobs one instance can handle
-    #  in the specified interval.
-    throughput: 20
-
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
-    interval: 10000
-
-    # Amount of time (seconds) to stabilize downscaling.
-    stabilization: 200
-
-    # Define the range of amount of replicas to deploy.
-    replicas:
-      min: 1
-      max: 5
-
-  - name: ip
-
-    # The docker image tag: <name>-<tag>
-    tag: latest
-
-    # Amount of jobs one instance can handle
-    #  in the specified interval.
-    throughput: 1
-
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
-    interval: 10000
-
-    # Amount of time (seconds) to stabilize downscaling.
-    stabilization: 200
-
-    # Define the range of amount of replicas to deploy.
-    replicas:
-      min: 1
-      max: 10
-
-  - name: mail
-
-    # The docker image tag: <name>-<tag>
-    tag: latest
-
-    # Amount of jobs one instance can handle
-    #  in the specified interval.
-    throughput: 20
-
-    # The interval (miliseconds) to periodicaly check
-    #  the size of the queue, and down/up scale
-    interval: 10000
-
-    # Amount of time (seconds) to stabilize downscaling.
-    stabilization: 200
-
-    # Define the range of amount of replicas to deploy.
-    replicas:
-      min: 1
-      max: 5
+# Argus Config
+#
+# This file is configured like the helm values.yaml. Everything that is not
+# expliciltly configured in this file will result in using the default values
+# from the helm chart.
+#
+# A detailed list of config options can be found at `charts/argus/README.md` or
+# `charts/argus/values.yaml`.
 
 
-# Logging
+# Add argus helm chart values here
+
+
+# The fluentd chart can also be deployed using this config, for this you must
+# set `fluentd.enabled` to `true`.  Config options for this chart can be found
+# at `charts/fluentd-argus/README.md` or `charts/argus/values.yaml` and
+# documentation provided in this file.
 fluentd:
   # Deploy fluentd
-  enabled: true
+  enabled: false
 
   # Namespace where fluentd lives
   namespace: fluentd
@@ -239,13 +44,3 @@ fluentd:
   #     ./fluentd/fluentd-config/custom.conf
   custom:
     enabled: false
-
-# Autoscaling based on throughput
-autoscaling:
-  enabled: true
-
-  # https://github.com/jthomperoo/custom-pod-autoscaler-operator/releases
-  version: v1.2.0
-
-  # checklist-scaler tag
-  tag: latest

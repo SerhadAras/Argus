@@ -1,6 +1,23 @@
 apiVersion: v2
+
 name: fluentd-argus
 description: The fluentd config that is tailored for argus.
+
 type: application
+
 version: 1.0.0
 appVersion: "1.0.0"
+
+home: https://github.com/WatcherWhale/SecProA
+sources:
+  - https://github.com/WatcherWhale/SecProA
+
+maintainers:
+  - name: Mathias Maes
+    url: https://github.com/WatcherWhale
+  - name: Cato van Hooijdonk
+    url: https://github.com/vanHooijdonkC
+  - name: Dimitriy Vassilchenko
+    url: https://github.com/calle987
+  - name: Arash Nouri
+    url: https://github.com/arash-nouri-1

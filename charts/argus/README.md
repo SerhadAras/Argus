@@ -1,6 +1,6 @@
 # Argus - Helm Chart
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square&logo=helm)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square&logo=helm)
 
 An automated security checking platform that is highly extensible.
 
@@ -105,7 +105,7 @@ Cert-master service configuration. Only necessary when `security.cluster.tls` is
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1/certificate"` | Base path of the service. |
 | env | object | `{}` | Custom environment variables to add to the service. |
-| loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
+| loglevel | string | `"info"` | Log level.  (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicas.max | int | `10` | Maximum replicas. |
@@ -144,7 +144,7 @@ Gateway service configuration.
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1/checks"` | Base path of the service. |
 | env | object | `{}` | Custom environment variables to add to the service. |
-| loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
+| loglevel | string | `"info"` | Log level.  (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicas.max | int | `10` | Maximum replicas. |
@@ -164,7 +164,7 @@ Metrics service configuration.
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1"` | Base path of the service. |
 | env | object | `{"SELENIUM_URL":"http://selenium-hub:4444"}` | Custom environment variables to add to the service. |
-| loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
+| loglevel | string | `"info"` | Log level.  (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicas.max | int | `10` | Maximum replicas. |
@@ -184,7 +184,7 @@ Sequencer service configuration.
 | annotations | object | `{}` | Deployment annotations. |
 | basePath | string | `"/api/v1"` | Base path of the service. |
 | env | object | `{}` | Custom environment variables to add to the service. |
-| loglevel | string | `"info"` | Log level. (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
+| loglevel | string | `"info"` | Log level.  (`silly`, `debug`, `verbose`, `http`, `info`, `warn`, `error`) |
 | nodeSelector | object | `{}` | Node Labels for pod assignment. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicas.max | int | `10` | Maximum replicas. |
@@ -204,3 +204,5 @@ Sequencer service configuration.
 | ---- | ------ |
 | Mathias Maes | [https://github.com/WatcherWhale](https://github.com/WatcherWhale)
 | Cato van Hooijdonk | [https://github.com/vanHooijdonkC](https://github.com/vanHooijdonkC)
+| Dimitriy Vassilchenko | [https://github.com/calle987](https://github.com/calle987)
+| Arash Nouri | [https://github.com/arash-nouri-1](https://github.com/arash-nouri-1)
