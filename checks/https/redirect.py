@@ -3,6 +3,7 @@
 from urllib import request
 import requests
 import sys
+import json
 
 import urllib3
 import requests
@@ -22,6 +23,18 @@ except:
 else:
     new_url = res.url
     if HTTPS in new_url:
-        print(f'{{"name": "Redirect HTTP", "score": 10, "message": "Redirection from http to https present: {url} to {new_url}.", "description": "redirect"}}')
+        print(json.dumps(
+            {
+             "name": "Redirect HTTP",
+             "score": 10,
+             "message": "Redirection present from http to https.",
+             "description": "redirect"
+            }))
     else:
-        print(f'{{"name": "Redirect HTTP", "score": 0, "message": "No redirection from http to https present.", "description": "redirect"}}')
+        print(json.dumps(
+            {
+                "name": "Redirect HTTP",
+                 "score": 0,
+                 "message": "No redirection from http to https present.",
+                 "description": "redirect"
+            }))

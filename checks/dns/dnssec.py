@@ -2,6 +2,7 @@
 
 import os
 import sys
+import json
 from shlex import quote
 
 dnsResolver = "8.8.8.8"
@@ -42,14 +43,34 @@ def testdnssec(domain):
         status_noerror = 0
 
     if ad_flag == 1 and status_noerror == 1:
-        print('{"name": "DNSSEC", "score": 10, "message": "Domain %s is safe, it uses a valid DNSSEC.", "description": "dnssec"}'%domain)
+        print(json.dumps({
+            "name": "DNSSEC",
+            "score": 10,
+            "message": "This domain is safe, it uses a valid DNSSEC.",
+            "description": "DNSSEC"
+        }))
     elif status_error == 1:
-        print('{"name": "DNSSEC", "score": 5, "message": "Domain %s uses DNSSEC but is misconfigured or invalid.", "description": "dnssec"}'%domain)
-    elif status_noerror == 1 and ad_flag == 0:
-        print('{"name": "DNSSEC", "score": 0, "message": "Domain %s does not use DNSSEC.", "description": "dnssec"}'%domain)
-    else:
-        print('{"name": "DNSSEC", "score": 0, "message": "Cannot read the result.", "description": "dnssec"}')
+        print(json.dumps({
+            "name": "DNSSEC",
+            "score": 5,
+            "message": "This domain uses DNSSEC but is misconfigured or invalid.",
+            "description": "DNSSEC"
+        }))
 
+    elif status_noerror == 1 and ad_flag == 0:
+        print(json.dumps({
+            "name": "DNSSEC",
+            "score": 0,
+            "message": "This domain does not use DNSSEC.",
+            "description": "DNSSEC"
+        }))
+    else:
+        print(json.dumps({
+            "name": "DNSSEC",
+            "score": 0,
+            "message": "Cannot read the result.",
+            "description": "DNSSEC"
+        }))
 
 if __name__ == '__main__':
     main()

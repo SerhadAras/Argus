@@ -52,7 +52,7 @@ def main(hostname: str, port: str = '443') -> int:
                     results.append({
                         "name": "expiration",
                         "score": 10,
-                        "message": "Certificate is not expired.",
+                        "message": "The certificate is not expired.",
                         "description": "certificate"
                     })
 
@@ -60,7 +60,7 @@ def main(hostname: str, port: str = '443') -> int:
                     results.append({
                         "name": "expiration",
                         "score": 0,
-                        "message": f"Certificate is expired with {-1 * days}.",
+                        "message": f"The certificate is expired with {-1 * days}.",
                         "description": "certificate"
                     })
 

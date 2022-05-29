@@ -15,7 +15,7 @@ def main(target: str, type: str):
         print(json.dumps({
             "name": "IPv6",
             "score": 0,
-            "message": f"{target} is not a IPv6 address.",
+            "message": "This ip address is not a IPv6 address.",
             "description": "ipv6"
         }))
         return
@@ -23,7 +23,7 @@ def main(target: str, type: str):
         print(json.dumps({
             "name": "IPv6",
             "score": 10,
-            "message": f"{target} is an IPv6 address.",
+            "message": "This ip address is an IPv6 address.",
             "description": "ipv6"
         }))
         return
@@ -31,7 +31,12 @@ def main(target: str, type: str):
     try:
         result = dns.resolver.resolve(target, 'AAAA')
     except:
-        print(f'{{"name": "IPv6", "score": 0, "message": "Domain: {target} does not have an IPv6 address.", "description": "ipv6"}}')
+        print(json.dumps({
+            "name": "IPv6",
+            "score": 0,
+            "message": "This ip address is not a IPv6 address.",
+            "description": "ipv6"
+        }))
         return
 
     ips = []
@@ -41,8 +46,8 @@ def main(target: str, type: str):
     print(json.dumps({
         "name": "IPv6",
         "score": 10,
-        "message": f"Domain: {target} has one or more IPv6 addresses.",
-        "value": ips,
+        "message": "The domain has one or more IPv6 addresses.",
+        "info": ips,
         "description": "ipv6"
     }))
 

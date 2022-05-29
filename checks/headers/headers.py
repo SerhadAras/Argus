@@ -109,7 +109,7 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                         "name": headerKey,
                         "score": value['score'],
                         "message": "Header is set up correctly.",
-                        "value": [headers[headerKey]],
+                        "info": [headers[headerKey]],
                         "description": "headers"
                     })
                     valueTest = True
@@ -120,7 +120,7 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     "name": headerKey,
                     "score": 0,
                     "message": f"{headerKey} shoud be absent.",
-                    "value": [headers[headerKey]],
+                    "info": [headers[headerKey]],
                     "description": "headers"
                 })
             elif not valueTest and pattern['present'] is None:
@@ -135,7 +135,7 @@ def checkHeaders(headers: dict, patterns: dict) -> list:
                     "name": headerKey,
                     "score": 0,
                     "message": "Header is not set up correctly.",
-                    "value": [headers[headerKey]],
+                    "info": [headers[headerKey]],
                     "description": "headers"
                 })
 

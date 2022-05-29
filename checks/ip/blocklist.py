@@ -84,7 +84,7 @@ def run(targets: list):
             results.append({
                 "name": "Blocklists",
                 "score": 0,
-                "message": f"{ip} is found on a blocklist.",
+                "message": "The ip address is found on a blocklist.",
                 "value": [blockedIps[ip]],
                 "description": "blacklist"
             })
@@ -94,7 +94,7 @@ def run(targets: list):
         results.append({
             "name": "Blocklists",
             "score": 10,
-            "message": f"{ip} is not found on a blocklist.",
+            "message": "The ip address is not found on a blocklist.",
             "value": [ip],
             "description": "blacklist"
         })

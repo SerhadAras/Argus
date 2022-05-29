@@ -1,3 +1,4 @@
+import json
 import socket, sys, ssl
 
 target = sys.argv[2]
@@ -14,7 +15,18 @@ except:
 else:
     versie = sslSocket.version()
     if "TLSv1.2" in versie or "TLSv1.3" in versie:
-        print(f'{{"name": "Protocol", "score": 10, "message": "Domain {target} uses version: {versie}.", "description": "protocol"}}')
+        print(json.dumps(
+            {   "name": "Protocol",
+                "score": 10,
+                "message": "This domain uses version: "+ str(versie)+".",
+                "description": "protocol"
+            }))
     else:
-        print(f'{{"name": "Protocol", "score": 0, "message": "Domain {target} uses version: {versie}, TLS version 1.2 or up required.", "description": "protocol" }}')
+        print(json.dumps(
+            {
+                "name": "Protocol",
+                "score": 0,
+                "message": "This domain uses version: "+str(versie)+", TLS version 1.2 or up required.",
+                "description": "protocol"
+            }))
     sslSocket.close()
