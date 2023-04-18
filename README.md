@@ -33,7 +33,7 @@ A list of all checklists included:
 
 <br>
 
-## Getting Started
+## Gettting Started
 
 Ready to integrate our platform with your infrastructure or just to see if it's something you need? <br>
 Everything you need to know for this will be in our [Getting Started](https://github.com/WatcherWhale/SecProA/wiki) page in the Arguswiki.
